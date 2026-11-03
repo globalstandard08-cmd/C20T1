@@ -10,19 +10,20 @@
         .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
         .header-bar { background-color: #1f3a5f; color: white; padding: 15px 25px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
         .content { padding: 25px 30px; }
-        .instruction-block { background-color: #f8fbfe; border-left: 4px solid #1f3a5f; padding: 15px; margin-bottom: 25px; border-radius: 4px; }
-        .instruction-block h3 { font-size: 17px; margin-bottom: 5px; color: #222; }
-        .instruction-block p { font-size: 15px; color: #444; }
-        .notes-card { border: 1px solid #ccc; border-radius: 6px; padding: 30px; background-color: #fff; }
-        .notes-heading { text-align: right; font-size: 18px; font-weight: bold; color: #666; margin-bottom: 25px; }
-        .notes-item { display: flex; align-items: center; margin: 12px 0; font-size: 16px; }
-        .bullet { margin-right: 8px; }
-        .q-label { min-width: 70px; }
-        .q-num { font-weight: bold; color: #1f3a5f; margin-right: 10px; }
+        h2 { color: #1f3a5f; margin: 30px 0 15px; font-size: 22px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+        .instruction { background-color: #f8fbfe; border-left: 4px solid #1f3a5f; padding: 15px; margin-bottom: 25px; border-radius: 4px; font-weight: 500; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0 30px; }
+        table, th, td { border: 1px solid #ccc; }
+        th, td { padding: 12px 15px; vertical-align: top; font-size: 16px; }
+        th { background: #fdfdfd; font-weight: bold; text-align: center; }
+        .q-num { display: inline-block; min-width: 35px; font-weight: bold; color: #1f3a5f; }
         .input-field { width: 220px; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; transition: all 0.2s; }
         .input-field:focus { outline: none; border-color: #1f3a5f; box-shadow: 0 0 3px rgba(31,58,95,0.3); }
         .input-field.filled { background-color: #e6f0ff; border-color: #1f3a5f; }
-        /* Highlight system */
+        .notes-block { border: 1px solid #ccc; border-radius: 6px; padding: 25px; margin-bottom: 30px; background-color: #fdfdfd; }
+        .notes-block p { margin: 8px 0; font-size: 16px; }
+        .notes-heading { text-align: right; font-size: 18px; font-weight: bold; color: #666; margin-bottom: 25px; }
+        /* === HIGHLIGHT SYSTEM — EXACTLY YOUR ORIGINAL === */
         .highlight {
             background-color: #ffd700;
             padding: 2px 4px;
@@ -95,7 +96,7 @@
             background: transparent;
             outline: none;
         }
-        /* Navigation */
+        /* === NAVIGATION — EXACTLY YOUR ORIGINAL === */
         .question-status {
             display: flex;
             flex-wrap: wrap;
@@ -108,6 +109,7 @@
             border: 1px solid #d0d5dd;
         }
         .part-label { font-size: 11px; font-weight: 600; color: #1f3a5f; margin-right: 4px; margin-left: 8px; }
+        .part-separator { width: 12px; height: 24px; flex-shrink: 0; }
         .q-indicator {
             width: 24px;
             height: 24px;
@@ -160,54 +162,24 @@
             <span style="font-size:15px; opacity:0.9;">Exam Mode</span>
         </div>
         <div class="content" id="passageArea">
-
-<!-- ========== EXACT MATCH TO YOUR IMAGE ========== -->
-<div class="instruction-block">
-    <h3>Questions 1–6</h3>
-    <p>Complete the notes below.</p>
-    <p>Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.</p>
+<!-- ========== EXACT INSTRUCTIONS FROM YOUR IMAGE ========== -->
+<h2>Questions 1–6</h2>
+<div class="instruction">
+    Complete the notes below.<br>
+    Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.
 </div>
 
-<div class="notes-card">
+<!-- ========== EXACT LAYOUT FROM YOUR IMAGE ========== -->
+<div class="notes-block">
     <div class="notes-heading">[YOUR HEADING]</div>
-    <div class="notes-item">
-        <span class="bullet">•</span>
-        <span class="q-label">Item one:</span>
-        <span class="q-num">1.</span>
-        <input type="text" class="input-field" data-q="1">
-    </div>
-    <div class="notes-item">
-        <span class="bullet">•</span>
-        <span class="q-label">Item two:</span>
-        <span class="q-num">2.</span>
-        <input type="text" class="input-field" data-q="2">
-    </div>
-    <div class="notes-item">
-        <span class="bullet">•</span>
-        <span class="q-label">Item three:</span>
-        <span class="q-num">3.</span>
-        <input type="text" class="input-field" data-q="3">
-    </div>
-    <div class="notes-item">
-        <span class="bullet">•</span>
-        <span class="q-label">Item four:</span>
-        <span class="q-num">4.</span>
-        <input type="text" class="input-field" data-q="4">
-    </div>
-    <div class="notes-item">
-        <span class="bullet">•</span>
-        <span class="q-label">Item five:</span>
-        <span class="q-num">5.</span>
-        <input type="text" class="input-field" data-q="5">
-    </div>
-    <div class="notes-item">
-        <span class="bullet">•</span>
-        <span class="q-label">Item six:</span>
-        <span class="q-num">6.</span>
-        <input type="text" class="input-field" data-q="6">
-    </div>
+    <p>• Item one: <span class="q-num">1.</span> <input type="text" class="input-field" data-q="1"></p>
+    <p>• Item two: <span class="q-num">2.</span> <input type="text" class="input-field" data-q="2"></p>
+    <p>• Item three: <span class="q-num">3.</span> <input type="text" class="input-field" data-q="3"></p>
+    <p>• Item four: <span class="q-num">4.</span> <input type="text" class="input-field" data-q="4"></p>
+    <p>• Item five: <span class="q-num">5.</span> <input type="text" class="input-field" data-q="5"></p>
+    <p>• Item six: <span class="q-num">6.</span> <input type="text" class="input-field" data-q="6"></p>
 </div>
-<!-- ========== END EXACT MATCH ========== -->
+<!-- ========== END CONTENT ========== -->
 
 <div class="question-status">
     <span class="part-label">Part 1</span>
@@ -222,29 +194,27 @@
 <button class="clear-btn" onclick="clearAll()">🗑️ Clear All Answers & Highlights</button>
 <div class="nav-container">
     <a href="index.html" class="back-main-btn">← Home</a>
-    <a href="listening-next.html" class="next-btn">Next →</a>
+    <a href="listening-section-next.html" class="next-btn">Next →</a>
 </div>
 
         </div><!-- /content -->
     </div><!-- /container -->
 
 <script>
+// ✅ FULL WORKING SCRIPT — SAME AS YOUR ORIGINAL
 const STORAGE_KEY = 'IELTS_Questions1-6';
 const passageId = 'listening-q1-6';
-const TOTAL_QUESTIONS = 6;
-
 let currentRange = null;
 let activeHighlight = null;
 
 function updateStatus() {
-    for (let q = 1; q <= TOTAL_QUESTIONS; q++) {
+    for (let q = 1; q <= 6; q++) {
         const btn = document.querySelector(`.q-indicator[data-q="${q}"]`);
         if (!btn) continue;
         const val = (localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '').trim();
         btn.classList.toggle('answered', val.length > 0);
     }
 }
-
 function saveHighlights() {
     const highlights = document.querySelectorAll('#passageArea .highlight');
     const data = Array.from(highlights).map(h => ({
@@ -253,7 +223,6 @@ function saveHighlights() {
     }));
     localStorage.setItem(`${passageId}_highlights`, JSON.stringify(data));
 }
-
 function isSelectionValid(sel) {
     if (!sel || sel.isCollapsed || !sel.toString().trim()) return false;
     try {
@@ -265,24 +234,20 @@ function isSelectionValid(sel) {
         return inArea && !inInput;
     } catch { return false; }
 }
-
 const noteBox = document.getElementById('noteBox');
 const noteText = document.getElementById('noteText');
 const noteClose = document.getElementById('noteClose');
 let isDraggingNote = false, offsetX = 0, offsetY = 0;
-
 noteClose.addEventListener('click', () => {
     noteBox.style.display = 'none';
     activeHighlight = null;
 });
-
 noteText.addEventListener('input', () => {
     if (activeHighlight) {
         activeHighlight.setAttribute('data-note', noteText.value);
         saveHighlights();
     }
 });
-
 document.addEventListener('mousedown', e => {
     if (!e.target.closest('.note-header')) return;
     isDraggingNote = true;
@@ -290,15 +255,12 @@ document.addEventListener('mousedown', e => {
     offsetX = e.clientX - rc.left;
     offsetY = e.clientY - rc.top;
 });
-
 document.addEventListener('mousemove', e => {
     if (!isDraggingNote) return;
     noteBox.style.left = (e.clientX - offsetX) + 'px';
     noteBox.style.top = (e.clientY - offsetY) + 'px';
 });
-
 document.addEventListener('mouseup', () => isDraggingNote = false);
-
 const ctxMenu = document.getElementById('contextMenu');
 document.addEventListener('contextmenu', e => {
     const sel = window.getSelection();
@@ -322,11 +284,9 @@ document.addEventListener('contextmenu', e => {
         activeHighlight = null;
     }
 });
-
 document.addEventListener('click', e => {
     if (!ctxMenu.contains(e.target)) ctxMenu.style.display = 'none';
 });
-
 document.getElementById('menuHighlight').addEventListener('click', () => {
     if (!currentRange) return;
     try {
@@ -340,7 +300,6 @@ document.getElementById('menuHighlight').addEventListener('click', () => {
     } catch { alert('⚠️ Select smaller text please.'); }
     ctxMenu.style.display = 'none';
 });
-
 document.getElementById('menuAddNote').addEventListener('click', () => {
     ctxMenu.style.display = 'none';
     if (!activeHighlight) {
@@ -369,7 +328,6 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
     noteText.value = activeHighlight.getAttribute('data-note') || '';
     noteText.focus();
 });
-
 document.getElementById('menuRemove').addEventListener('click', () => {
     ctxMenu.style.display = 'none';
     noteBox.style.display = 'none';
@@ -378,4 +336,13 @@ document.getElementById('menuRemove').addEventListener('click', () => {
         document.createTextNode(activeHighlight.textContent),
         activeHighlight
     );
-    activeHighlight
+    activeHighlight.parentNode.normalize();
+    activeHighlight = null;
+    saveHighlights();
+});
+function saveAnswer(q, val) {
+    localStorage.setItem(`${STORAGE_KEY}_q${q}`, val);
+    updateStatus();
+}
+function clearAll() {
+    if (!confirm('⚠️ Clear all answers and highlights? This cannot be undone.')) return;
