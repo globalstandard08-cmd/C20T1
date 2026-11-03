@@ -20,7 +20,7 @@
         .q-input:focus { outline: none; border-color: #1f3a5f; box-shadow: 0 0 3px rgba(31,58,95,0.3); }
         .q-input.filled { background-color: #e6f0ff; border-color: #1f3a5f; }
 
-        /* Highlight system */
+        /* === HIGHLIGHT & NOTE SYSTEM — FULLY RESTORED === */
         .highlight {
             background-color: #ffd700;
             padding: 2px 4px;
@@ -28,7 +28,9 @@
             cursor: pointer;
             display: inline;
             position: relative;
+            transition: background-color 0.2s;
         }
+        .highlight:hover { background-color: #ffeb3b; }
         .note-marker {
             position: absolute;
             top: -8px;
@@ -77,9 +79,20 @@
             cursor: move;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            color: #333;
         }
-        .note-close { cursor: pointer; font-weight: bold; font-size: 16px; }
-        .note-textarea { width: 100%; min-height: 60px; border: none; padding: 10px; resize: vertical; background: transparent; outline: none; }
+        .note-close { cursor: pointer; font-weight: bold; font-size: 16px; line-height: 1; }
+        .note-textarea {
+            width: 100%;
+            min-height: 60px;
+            border: none;
+            padding: 10px;
+            font-size: 14px;
+            resize: vertical;
+            background: transparent;
+            outline: none;
+        }
 
         /* Navigation */
         .question-status {
@@ -108,6 +121,7 @@
         }
         .q-indicator.answered { background: #10b981; color: white; border-color: #10b981; }
         .clear-btn { background-color: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        .clear-btn:hover { background-color: #b91c1c; }
         .nav-container {
             display: flex;
             justify-content: space-between;
@@ -129,7 +143,7 @@
         <div id="menuRemove">❌ Remove Highlight & Note</div>
     </div>
 
-    <!-- Note Box -->
+    <!-- Draggable Note Box -->
     <div class="note-box" id="noteBox">
         <div class="note-header" id="noteDragHandle">
             <span>📝 Note</span>
@@ -349,19 +363,4 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
     noteText.focus();
 });
 
-document.getElementById('menuRemove').addEventListener('click', () => {
-    ctxMenu.style.display = 'none';
-    noteBox.style.display = 'none';
-    if (!activeHighlight) return;
-    activeHighlight.parentNode.replaceChild(
-        document.createTextNode(activeHighlight.textContent),
-        activeHighlight
-    );
-    activeHighlight.parentNode.normalize();
-    activeHighlight = null;
-    saveHighlights();
-});
-
-document.querySelectorAll('.q-input').forEach(input => {
-    input.addEventListener('input', () => {
-        saveAnswer(input.dataset.q, input.value
+document.getElementById('menuRemove').addEventListener('click', ()
