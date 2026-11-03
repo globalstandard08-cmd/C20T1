@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS LISTENING — [INSERT TITLE HERE]</title>
+    <title>IELTS LISTENING — [YOUR SECTION TITLE]</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
         body { background-color: #f4f6f9; padding: 20px; line-height: 1.7; }
@@ -22,7 +22,7 @@
         .input-field.filled { background-color: #e6f0ff; border-color: #1f3a5f; }
         .notes-block { border: 1px solid #ccc; border-radius: 6px; padding: 25px; margin-bottom: 30px; background-color: #fdfdfd; }
         .notes-block p { margin: 8px 0; font-size: 16px; }
-        /* === HIGHLIGHT SYSTEM — UNCHANGED === */
+        /* === HIGHLIGHT SYSTEM — EXACTLY YOURS === */
         .highlight {
             background-color: #ffd700;
             padding: 2px 4px;
@@ -95,7 +95,7 @@
             background: transparent;
             outline: none;
         }
-        /* === NAVIGATION — UNCHANGED === */
+        /* === NAVIGATION — EXACTLY YOURS === */
         .question-status {
             display: flex;
             flex-wrap: wrap;
@@ -157,65 +157,82 @@
     </div>
     <div class="container">
         <div class="header-bar">
-            <span>LISTENING — [INSERT SECTION TITLE]</span>
+            <span>LISTENING — [YOUR SECTION TITLE]</span>
             <span style="font-size:15px; opacity:0.9;">Exam Mode</span>
         </div>
         <div class="content" id="passageArea">
-<!-- ========== PART [X] ========== -->
-<h2>PART [X] — Questions [RANGE]</h2>
+<!-- ========== PART SECTION ========== -->
+<h2>PART 1 — Questions 1–10</h2>
 <div class="instruction">
-    <strong>Questions [RANGE]</strong><br>
-    [INSTRUCTION TEXT — e.g. Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.]
+    <strong>Questions 1–6</strong><br>
+    Complete the notes below.<br>
+    Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.
 </div>
 
-<!-- === YOUR QUESTION CONTENT GOES HERE === -->
-<!-- Replace this section with the exact questions from your image -->
+<!-- === REPLACE THIS WITH YOUR ACTUAL QUESTIONS === -->
 <div class="notes-block">
-    <h3 style="text-align:center; margin-bottom:20px; color:#1f3a5f;">[HEADING]</h3>
-    <p>• [Item text]: <span class="q-num">1.</span> <input type="text" class="input-field" data-q="1"></p>
-    <p>• [Item text]: <span class="q-num">2.</span> <input type="text" class="input-field" data-q="2"></p>
-    <p>• [Item text]: <span class="q-num">3.</span> <input type="text" class="input-field" data-q="3"></p>
-    <!-- Add more as needed -->
+    <h3 style="text-align:center; margin-bottom:20px; color:#1f3a5f;">[YOUR HEADING]</h3>
+    <p>• Item one: <span class="q-num">1.</span> <input type="text" class="input-field" data-q="1"></p>
+    <p>• Item two: <span class="q-num">2.</span> <input type="text" class="input-field" data-q="2"></p>
+    <p>• Item three: <span class="q-num">3.</span> <input type="text" class="input-field" data-q="3"></p>
+    <p>• Item four: <span class="q-num">4.</span> <input type="text" class="input-field" data-q="4"></p>
+    <p>• Item five: <span class="q-num">5.</span> <input type="text" class="input-field" data-q="5"></p>
+    <p>• Item six: <span class="q-num">6.</span> <input type="text" class="input-field" data-q="6"></p>
 </div>
 
-<!-- Use table format if it's a table task:
+<div class="instruction">
+    <strong>Questions 7–10</strong><br>
+    Complete the table below.<br>
+    Write <strong>ONE WORD ONLY</strong> for each answer.
+</div>
+
 <table>
-    <tr><th colspan="4">[TABLE HEADER]</th></tr>
-    <tr><th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th></tr>
+    <tr><th colspan="4">[TABLE TITLE]</th></tr>
+    <tr><th>Column 1</th><th>Column 2</th><th>Column 3</th><th>Notes</th></tr>
     <tr>
-        <td>Row label</td>
-        <td>Content <span class="q-num">4.</span> <input type="text" class="input-field" data-q="4"></td>
-        <td>Content <span class="q-num">5.</span> <input type="text" class="input-field" data-q="5"></td>
-        <td>Content</td>
+        <td><strong>Example row</strong></td>
+        <td>Detail: <span class="q-num">7.</span> <input type="text" class="input-field" data-q="7"></td>
+        <td>Detail: <span class="q-num">8.</span> <input type="text" class="input-field" data-q="8"></td>
+        <td>Special instruction</td>
+    </tr>
+    <tr>
+        <td><strong>Next row</strong></td>
+        <td>Detail: <span class="q-num">9.</span> <input type="text" class="input-field" data-q="9"></td>
+        <td>Detail: <span class="q-num">10.</span> <input type="text" class="input-field" data-q="10"></td>
+        <td>Special instruction</td>
     </tr>
 </table>
--->
 <!-- ========== END QUESTION CONTENT ========== -->
 
-<!-- ========== NAV AT BOTTOM — UPDATE Q NUMBERS ========== -->
+<!-- ========== NAVIGATION — MATCH YOUR QUESTION NUMBERS ========== -->
 <div class="question-status">
-    <span class="part-label">Part [X]</span>
+    <span class="part-label">Part 1</span>
     <div class="q-indicator" data-q="1">1</div>
     <div class="q-indicator" data-q="2">2</div>
     <div class="q-indicator" data-q="3">3</div>
     <div class="q-indicator" data-q="4">4</div>
     <div class="q-indicator" data-q="5">5</div>
-    <!-- Add more indicators matching your question count -->
+    <div class="q-indicator" data-q="6">6</div>
+    <div class="q-indicator" data-q="7">7</div>
+    <div class="q-indicator" data-q="8">8</div>
+    <div class="q-indicator" data-q="9">9</div>
+    <div class="q-indicator" data-q="10">10</div>
 </div>
+
 <button class="clear-btn" onclick="clearAll()">🗑️ Clear All Answers & Highlights</button>
 <div class="nav-container">
     <a href="index.html" class="back-main-btn">← Home</a>
-    <a href="listening-section3.html" class="next-btn">Next: section3 →</a>
+    <a href="listening-section2.html" class="next-btn">Next: Section 2 →</a>
 </div>
         </div><!-- /content -->
     </div><!-- /container -->
 
 <script>
-// === UPDATE THESE FOR YOUR SECTION ===
-const STORAGE_KEY = 'CambridgeXX_TestX_Listening';
-const passageId = 'listening-[your-unique-id]';
-const TOTAL_QUESTIONS = 5; // Match your question count
-// ======================================
+// === CONFIG — UPDATE THESE FOR YOUR FILE ===
+const STORAGE_KEY = 'Cambridge19_TestX_Listening_Part1';
+const passageId = 'listening-your-file-id';
+const TOTAL_QUESTIONS = 10;
+// ===========================================
 
 let currentRange = null;
 let activeHighlight = null;
@@ -228,6 +245,7 @@ function updateStatus() {
         btn.classList.toggle('answered', val.length > 0);
     }
 }
+
 function saveHighlights() {
     const highlights = document.querySelectorAll('#passageArea .highlight');
     const data = Array.from(highlights).map(h => ({
@@ -236,6 +254,7 @@ function saveHighlights() {
     }));
     localStorage.setItem(`${passageId}_highlights`, JSON.stringify(data));
 }
+
 function isSelectionValid(sel) {
     if (!sel || sel.isCollapsed || !sel.toString().trim()) return false;
     try {
@@ -247,20 +266,24 @@ function isSelectionValid(sel) {
         return inArea && !inInput;
     } catch { return false; }
 }
+
 const noteBox = document.getElementById('noteBox');
 const noteText = document.getElementById('noteText');
 const noteClose = document.getElementById('noteClose');
 let isDraggingNote = false, offsetX = 0, offsetY = 0;
+
 noteClose.addEventListener('click', () => {
     noteBox.style.display = 'none';
     activeHighlight = null;
 });
+
 noteText.addEventListener('input', () => {
     if (activeHighlight) {
         activeHighlight.setAttribute('data-note', noteText.value);
         saveHighlights();
     }
 });
+
 document.addEventListener('mousedown', e => {
     if (!e.target.closest('.note-header')) return;
     isDraggingNote = true;
@@ -268,12 +291,15 @@ document.addEventListener('mousedown', e => {
     offsetX = e.clientX - rc.left;
     offsetY = e.clientY - rc.top;
 });
+
 document.addEventListener('mousemove', e => {
     if (!isDraggingNote) return;
     noteBox.style.left = (e.clientX - offsetX) + 'px';
     noteBox.style.top = (e.clientY - offsetY) + 'px';
 });
+
 document.addEventListener('mouseup', () => isDraggingNote = false);
+
 const ctxMenu = document.getElementById('contextMenu');
 document.addEventListener('contextmenu', e => {
     const sel = window.getSelection();
@@ -297,9 +323,11 @@ document.addEventListener('contextmenu', e => {
         activeHighlight = null;
     }
 });
+
 document.addEventListener('click', e => {
     if (!ctxMenu.contains(e.target)) ctxMenu.style.display = 'none';
 });
+
 document.getElementById('menuHighlight').addEventListener('click', () => {
     if (!currentRange) return;
     try {
@@ -313,6 +341,7 @@ document.getElementById('menuHighlight').addEventListener('click', () => {
     } catch { alert('⚠️ Select smaller text please.'); }
     ctxMenu.style.display = 'none';
 });
+
 document.getElementById('menuAddNote').addEventListener('click', () => {
     ctxMenu.style.display = 'none';
     if (!activeHighlight) {
@@ -321,21 +350,3 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
             const sp = document.createElement('span');
             sp.className = 'highlight';
             sp.textContent = currentRange.toString();
-            currentRange.deleteContents();
-            currentRange.insertNode(sp);
-            activeHighlight = sp;
-            window.getSelection().removeAllRanges();
-            saveHighlights();
-        } catch { alert('⚠️ Select smaller text please.'); return; }
-    }
-    if (!activeHighlight.querySelector('.note-marker')) {
-        const m = document.createElement('span');
-        m.className = 'note-marker';
-        m.textContent = '!';
-        activeHighlight.appendChild(m);
-    }
-    const rc = activeHighlight.getBoundingClientRect();
-    noteBox.style.left = (rc.right + window.scrollX + 10) + 'px';
-    noteBox.style.top = (rc.top + window.scrollY) + 'px';
-    noteBox.style.display = 'block';
-    noteText.value = activeHighlight.getAttribute('data
