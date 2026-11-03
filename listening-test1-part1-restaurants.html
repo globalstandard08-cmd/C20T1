@@ -20,7 +20,7 @@
         .input-field:focus { outline: none; border-color: #1f3a5f; box-shadow: 0 0 3px rgba(31,58,95,0.3); }
         .input-field.filled { background-color: #e6f0ff; border-color: #1f3a5f; }
 
-        /* === HIGHLIGHT SYSTEM — EXACTLY FROM SAMPLE === */
+        /* === HIGHLIGHT SYSTEM — EXACTLY FROM YOUR SAMPLE === */
         .highlight {
             background-color: #ffd700;
             padding: 2px 4px;
@@ -94,7 +94,7 @@
             outline: none;
         }
 
-        /* === NAVIGATION — EXACTLY FROM SAMPLE === */
+        /* === NAVIGATION — EXACTLY FROM YOUR SAMPLE === */
         .question-status {
             display: flex;
             flex-wrap: wrap;
@@ -168,7 +168,7 @@
                 Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.
             </div>
 
-            <!-- TABLE — MATCHES YOUR SCREENSHOT EXACTLY -->
+            <!-- TABLE — EXACTLY FROM YOUR SCREENSHOT -->
             <table>
                 <tr>
                     <th>Name of restaurant</th>
@@ -235,7 +235,7 @@
     </div>
 
 <script>
-// === STORAGE & HIGHLIGHT SYSTEM — EXACTLY FROM YOUR SAMPLE ===
+// === FULL WORKING SYSTEM — FROM YOUR SAMPLE ===
 const STORAGE_KEY = 'IELTS_Listening_Test1_Part1_Restaurants';
 const passageId = 'listening-test1-part1-restaurants';
 let currentRange = null;
@@ -355,4 +355,6 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
         if (!currentRange) return;
         try {
             const sp = document.createElement('span');
-            sp.className
+            sp.className = 'highlight';
+            sp.textContent = currentRange.toString();
+           
