@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS Listening — Restaurant Recommendations</title>
+    <title>IELTS LISTENING — [INSERT TITLE HERE]</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
         body { background-color: #f4f6f9; padding: 20px; line-height: 1.7; }
@@ -22,6 +22,7 @@
         .input-field.filled { background-color: #e6f0ff; border-color: #1f3a5f; }
         .notes-block { border: 1px solid #ccc; border-radius: 6px; padding: 25px; margin-bottom: 30px; background-color: #fdfdfd; }
         .notes-block p { margin: 8px 0; font-size: 16px; }
+        /* === HIGHLIGHT SYSTEM — UNCHANGED === */
         .highlight {
             background-color: #ffd700;
             padding: 2px 4px;
@@ -94,6 +95,7 @@
             background: transparent;
             outline: none;
         }
+        /* === NAVIGATION — UNCHANGED === */
         .question-status {
             display: flex;
             flex-wrap: wrap;
@@ -139,11 +141,13 @@
     </style>
 </head>
 <body>
+    <!-- Right-Click Menu -->
     <div class="context-menu" id="contextMenu">
         <div id="menuHighlight">🖍️ Highlight</div>
         <div id="menuAddNote">📝 Add Note</div>
         <div id="menuRemove">❌ Remove Highlight & Note</div>
     </div>
+    <!-- Draggable Note Box -->
     <div class="note-box" id="noteBox">
         <div class="note-header" id="noteDragHandle">
             <span>📝 Note</span>
@@ -153,69 +157,71 @@
     </div>
     <div class="container">
         <div class="header-bar">
-            <span>LISTENING — TEST 1 PART 1</span>
+            <span>LISTENING — [INSERT SECTION TITLE]</span>
             <span style="font-size:15px; opacity:0.9;">Exam Mode</span>
         </div>
         <div class="content" id="passageArea">
-<h2>PART 1 — Questions 1–10</h2>
+<!-- ========== PART [X] ========== -->
+<h2>PART [X] — Questions [RANGE]</h2>
 <div class="instruction">
-    <strong>Complete the notes below.</strong><br>
-    Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.
+    <strong>Questions [RANGE]</strong><br>
+    [INSTRUCTION TEXT — e.g. Complete the notes below. Write ONE WORD AND/OR A NUMBER for each answer.]
 </div>
+
+<!-- === YOUR QUESTION CONTENT GOES HERE === -->
+<!-- Replace this section with the exact questions from your image -->
+<div class="notes-block">
+    <h3 style="text-align:center; margin-bottom:20px; color:#1f3a5f;">[HEADING]</h3>
+    <p>• [Item text]: <span class="q-num">1.</span> <input type="text" class="input-field" data-q="1"></p>
+    <p>• [Item text]: <span class="q-num">2.</span> <input type="text" class="input-field" data-q="2"></p>
+    <p>• [Item text]: <span class="q-num">3.</span> <input type="text" class="input-field" data-q="3"></p>
+    <!-- Add more as needed -->
+</div>
+
+<!-- Use table format if it's a table task:
 <table>
+    <tr><th colspan="4">[TABLE HEADER]</th></tr>
+    <tr><th>Column A</th><th>Column B</th><th>Column C</th><th>Column D</th></tr>
     <tr>
-        <th>Name of restaurant</th>
-        <th>Location</th>
-        <th>Reason for recommendation</th>
-        <th>Other comments</th>
-    </tr>
-    <tr>
-        <td><strong>The Junction</strong></td>
-        <td>Greyson Street, near the station</td>
-        <td>Good for people who are especially keen on <span class="q-num">1.</span> <input type="text" class="input-field" data-q="1"></td>
-        <td>Quite expensive<br>The <span class="q-num">2.</span> <input type="text" class="input-field" data-q="2"> is a good place for a drink</td>
-    </tr>
-    <tr>
-        <td><strong>Paloma</strong></td>
-        <td>In Bow Street next to the cinema</td>
-        <td><span class="q-num">3.</span> <input type="text" class="input-field" data-q="3"> Food, good for sharing</td>
-        <td>Staff are very friendly<br>Need to pay £50 deposit<br>A limited selection of <span class="q-num">4.</span> <input type="text" class="input-field" data-q="4"></td>
-    </tr>
-    <tr>
-        <td>The <span class="q-num">5.</span> <input type="text" class="input-field" data-q="5"></td>
-        <td>At the top of a <span class="q-num">6.</span> <input type="text" class="input-field" data-q="6"></td>
-        <td>A famous chef<br>All the <span class="q-num">7.</span> <input type="text" class="input-field" data-q="7"> are very good<br>Only uses <span class="q-num">8.</span> <input type="text" class="input-field" data-q="8"> ingredients</td>
-        <td>Set lunch costs <span class="q-num">9.</span> <input type="text" class="input-field" data-q="9"> per person<br>Portions probably of <span class="q-num">10.</span> <input type="text" class="input-field" data-q="10"> size</td>
+        <td>Row label</td>
+        <td>Content <span class="q-num">4.</span> <input type="text" class="input-field" data-q="4"></td>
+        <td>Content <span class="q-num">5.</span> <input type="text" class="input-field" data-q="5"></td>
+        <td>Content</td>
     </tr>
 </table>
+-->
+<!-- ========== END QUESTION CONTENT ========== -->
+
+<!-- ========== NAV AT BOTTOM — UPDATE Q NUMBERS ========== -->
 <div class="question-status">
-    <span class="part-label">Part 1</span>
+    <span class="part-label">Part [X]</span>
     <div class="q-indicator" data-q="1">1</div>
     <div class="q-indicator" data-q="2">2</div>
     <div class="q-indicator" data-q="3">3</div>
     <div class="q-indicator" data-q="4">4</div>
     <div class="q-indicator" data-q="5">5</div>
-    <div class="q-indicator" data-q="6">6</div>
-    <div class="q-indicator" data-q="7">7</div>
-    <div class="q-indicator" data-q="8">8</div>
-    <div class="q-indicator" data-q="9">9</div>
-    <div class="q-indicator" data-q="10">10</div>
+    <!-- Add more indicators matching your question count -->
 </div>
 <button class="clear-btn" onclick="clearAll()">🗑️ Clear All Answers & Highlights</button>
 <div class="nav-container">
     <a href="index.html" class="back-main-btn">← Home</a>
-    <a href="listening-section2.html" class="next-btn">Next: Section 2 →</a>
+    <a href="listening-section3.html" class="next-btn">Next: section3 →</a>
 </div>
-        </div>
-    </div>
+        </div><!-- /content -->
+    </div><!-- /container -->
+
 <script>
-const STORAGE_KEY = 'Listening_Test1_Part1_Restaurants';
-const passageId = 'listening-test1-part1-restaurants';
+// === UPDATE THESE FOR YOUR SECTION ===
+const STORAGE_KEY = 'CambridgeXX_TestX_Listening';
+const passageId = 'listening-[your-unique-id]';
+const TOTAL_QUESTIONS = 5; // Match your question count
+// ======================================
+
 let currentRange = null;
 let activeHighlight = null;
 
 function updateStatus() {
-    for (let q = 1; q <= 10; q++) {
+    for (let q = 1; q <= TOTAL_QUESTIONS; q++) {
         const btn = document.querySelector(`.q-indicator[data-q="${q}"]`);
         if (!btn) continue;
         const val = (localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '').trim();
@@ -332,9 +338,4 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
     noteBox.style.left = (rc.right + window.scrollX + 10) + 'px';
     noteBox.style.top = (rc.top + window.scrollY) + 'px';
     noteBox.style.display = 'block';
-    noteText.value = activeHighlight.getAttribute('data-note') || '';
-    noteText.focus();
-});
-document.getElementById('menuRemove').addEventListener('click', () => {
-    ctxMenu.style.display = 'none';
-    noteBox.style
+    noteText.value = activeHighlight.getAttribute('data
