@@ -212,10 +212,9 @@
     <a href="index.html" class="back-main-btn">← Home</a>
     <a href="listening-section2.html" class="next-btn">Next: Section 2 →</a>
 </div>
-        </div><!-- /content -->
-    </div><!-- /container -->
+        </div>
+    </div>
 <script>
-// ✅ Restaurant Recommendations — Full Working Version
 const STORAGE_KEY = 'Listening_Test1_Part1_Restaurants';
 const passageId = 'listening-test1-part1-restaurants';
 let currentRange = null;
@@ -335,4 +334,6 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
         m.textContent = '!';
         activeHighlight.appendChild(m);
     }
-    const rc = activeHighlight.getBounding
+    const rc = activeHighlight.getBoundingClientRect();
+    noteBox.style.left = (rc.right + window.scrollX + 10) + 'px';
+    noteBox.style.top = (rc.top + window.scrollY) + '
