@@ -22,7 +22,6 @@
         .input-field.filled { background-color: #e6f0ff; border-color: #1f3a5f; }
         .notes-block { border: 1px solid #ccc; border-radius: 6px; padding: 25px; margin-bottom: 30px; background-color: #fdfdfd; }
         .notes-block p { margin: 8px 0; font-size: 16px; }
-        /* === HIGHLIGHT SYSTEM === */
         .highlight {
             background-color: #ffd700;
             padding: 2px 4px;
@@ -95,7 +94,6 @@
             background: transparent;
             outline: none;
         }
-        /* === NAVIGATION === */
         .question-status {
             display: flex;
             flex-wrap: wrap;
@@ -141,13 +139,11 @@
     </style>
 </head>
 <body>
-    <!-- Right-Click Menu -->
     <div class="context-menu" id="contextMenu">
         <div id="menuHighlight">🖍️ Highlight</div>
         <div id="menuAddNote">📝 Add Note</div>
         <div id="menuRemove">❌ Remove Highlight & Note</div>
     </div>
-    <!-- Draggable Note Box -->
     <div class="note-box" id="noteBox">
         <div class="note-header" id="noteDragHandle">
             <span>📝 Note</span>
@@ -161,7 +157,6 @@
             <span style="font-size:15px; opacity:0.9;">Exam Mode</span>
         </div>
         <div class="content" id="passageArea">
-<!-- ========== PART 1 ========== -->
 <h2>PART 1 — Questions 1–10</h2>
 <div class="instruction">
     <strong>Complete the notes below.</strong><br>
@@ -193,7 +188,6 @@
         <td>Set lunch costs <span class="q-num">9.</span> <input type="text" class="input-field" data-q="9"> per person<br>Portions probably of <span class="q-num">10.</span> <input type="text" class="input-field" data-q="10"> size</td>
     </tr>
 </table>
-<!-- ========== NAV AT BOTTOM ========== -->
 <div class="question-status">
     <span class="part-label">Part 1</span>
     <div class="q-indicator" data-q="1">1</div>
@@ -336,4 +330,11 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
     }
     const rc = activeHighlight.getBoundingClientRect();
     noteBox.style.left = (rc.right + window.scrollX + 10) + 'px';
-    noteBox.style.top = (rc.top + window.scrollY) + '
+    noteBox.style.top = (rc.top + window.scrollY) + 'px';
+    noteBox.style.display = 'block';
+    noteText.value = activeHighlight.getAttribute('data-note') || '';
+    noteText.focus();
+});
+document.getElementById('menuRemove').addEventListener('click', () => {
+    ctxMenu.style.display = 'none';
+    noteBox.style
