@@ -16,7 +16,7 @@
         .subtitle { font-size: 17px; color: #444; max-width: 750px; margin: 0 auto 20px; }
         .select-type { margin: 20px 0; }
         .select-type label { display: block; font-size: 16px; color: #333; margin-bottom: 10px; font-weight: 500; }
-        .type-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+        .type-buttons { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
         .type-btn { padding: 10px 24px; border: 2px solid #dc2626; background: white; color: #dc2626; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
         .type-btn.active, .type-btn:hover { background: #dc2626; color: white; }
         .enter-btn { display: inline-block; padding: 14px 32px; background: #dc2626; color: white; text-decoration: none; border-radius: 8px; font-size: 18px; font-weight: 600; margin: 12px 0 8px; transition: background 0.2s; pointer-events: none; opacity: 0.5; }
@@ -40,17 +40,15 @@
         <h1>CAMBRIDGE IELTS PRACTICE MATERIALS</h1>
         <h2>Select Your Test — Cambridge Test</h2>
         <p class="subtitle">Prepare effectively with authentic practice tests based on the official Cambridge IELTS format.</p>
-        
         <div class="select-type">
-            <label>Choose which test section to practice:</label>
+            <label>Choose which version you want to practice:</label>
             <div class="type-buttons">
-                <button class="type-btn" data-link="ielts-listening-first-day-at-work.html">📚 First Day At Work</button>
-                <button class="type-btn" data-link="listening-test1-part1-restaurants.html">🍽️ Restaurant Recommendations</button>
+                <button class="type-btn" data-link="listening-test1-part1-restaurants.html">📚 ACADEMIC</button>
+                <button class="type-btn" data-link="ielts-listening-first-day-at-work.html">👥 GENERAL TRAINING</button>
             </div>
         </div>
-
         <a id="startBtn" href="#" class="enter-btn">📝 START IELTS MOCK TEST</a>
-        <p class="test-note">You are about to start: <strong id="testName">Select a test above</strong><br>Complete flow: Listening → Reading → Writing → All Answers Review</p>
+        <p class="test-note">You are about to start: <strong>Cambridge Test</strong><br>Complete flow: Listening → Reading → Writing → All Answers Review</p>
     </div>
     <div class="disclaimer">
         <h3>Disclaimer</h3>
@@ -59,14 +57,12 @@
     <script>
         const typeBtns = document.querySelectorAll('.type-btn');
         const startBtn = document.getElementById('startBtn');
-        const testName = document.getElementById('testName');
         
         typeBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 typeBtns.forEach(b => b.classList.remove('active'));
                 btn.classList.add('active');
                 startBtn.href = btn.getAttribute('data-link');
-                testName.textContent = btn.textContent.trim();
                 startBtn.classList.add('enabled');
             });
         });
