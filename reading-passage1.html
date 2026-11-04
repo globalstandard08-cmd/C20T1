@@ -74,6 +74,43 @@
             font-weight: bold;
             text-decoration: none;
         }
+                .bottom-nav { 
+            min-height: 48px; 
+            border-top: 1px solid #eee; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 8px 15px; 
+            position: sticky; 
+            bottom: 0; 
+            background: #fff; 
+            z-index: 90; 
+            flex-wrap: wrap; /* ← ADDED: wraps items to fit */
+            gap: 6px 12px;    /* ← ADDED: spacing between rows */
+        }
+        .nav-group {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            flex-wrap: wrap;   /* ← ADDED: wraps numbers to fit */
+        }
+        .q-indicator {
+            width: 24px;       /* ← REDUCED: smaller buttons */
+            height: 24px;
+            line-height: 22px;
+            font-size: 10px;   /* ← SMALLER text */
+        }
+        .part-label {
+            font-size: 10px;
+            margin: 0 2px;
+            white-space: nowrap; /* ← keep label + number together */
+        }
+        .next-passage-btn {
+            padding: 6px 14px;  /* ← slightly smaller button */
+            white-space: nowrap; /* ← keep "Next →" on one line */
+            flex-shrink: 0;      /* ← never squish the button */
+        }
+
         .passage-text { font-size: 16px; line-height: 1.7; }
         .passage-text p { margin-bottom: 14px; text-align: justify; }
         .para-label { font-weight: bold; color: #1f3a5f; display: inline-block; min-width: 24px; }
