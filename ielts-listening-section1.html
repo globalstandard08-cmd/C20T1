@@ -270,4 +270,22 @@ function clearAll() {
         h.parentNode.replaceChild(document.createTextNode(h.textContent), h);
         h.parentNode.normalize();
     });
-   
+       noteBox.style.display = 'none';
+    updateStatus();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Load saved answers
+    document.querySelectorAll('.answer-input').forEach(inp => {
+        const q = inp.dataset.q;
+        inp.value = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
+        inp.addEventListener('input', () => {
+            saveAnswer(q, inp.value);
+        });
+    });
+    updateStatus();
+});
+</script>
+</body>
+</html>
+
