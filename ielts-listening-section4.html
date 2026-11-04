@@ -13,11 +13,12 @@
         h2 { color: #1f3a5f; margin: 0 0 20px; font-size: 22px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
         .instruction { background-color: #f8fbfe; border-left: 4px solid #1f3a5f; padding: 15px; margin-bottom: 25px; border-radius: 4px; font-weight: 500; }
         .notes-title { text-align: center; font-size: 17px; margin: 15px 0; color: #1f3a5f; font-weight: bold; }
-        .notes-section { margin-bottom: 20px; }
-        .notes-heading { font-weight: bold; color: #1f3a5f; margin: 15px 0 8px; font-size: 16px; }
-        .notes-row { display: flex; align-items: center; margin: 10px 0; flex-wrap: wrap; gap: 12px; }
-        .notes-text { flex: 1; min-width: 300px; font-size: 15px; }
-        .notes-input { width: 200px; padding: 6px 10px; border: 1px solid #999; border-radius: 3px; font-size: 15px; }
+        .notes-section { margin-bottom: 22px; }
+        .notes-heading { font-weight: bold; color: #1f3a5f; margin: 18px 0 10px; font-size: 16px; }
+        .notes-row { display: flex; align-items: center; margin: 10px 0; flex-wrap: wrap; gap: 10px; }
+        .notes-text { font-size: 15px; line-height: 1.8; }
+        .input-wrapper { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+        .notes-input { width: 160px; padding: 5px 8px; border: 1px solid #666; border-radius: 2px; font-size: 15px; }
         .notes-input:focus { outline: none; border-color: #1f3a5f; box-shadow: 0 0 0 2px rgba(31,58,95,0.15); }
         .highlight { background-color: #ffd700; padding: 2px 4px; border-radius: 2px; cursor: pointer; display: inline; position: relative; transition: background-color 0.2s; }
         .highlight:hover { background-color: #ffeb3b; }
@@ -41,6 +42,7 @@
         .back-main-btn:hover { background-color: #4b5563; }
         .next-btn { background-color: #10b981; color: white; border: none; padding: 10px 18px; border-radius: 4px; font-size: 15px; text-decoration: none; }
         .next-btn:hover { background-color: #059669; }
+        .indent { padding-left: 22px; }
     </style>
 </head>
 <body>
@@ -73,61 +75,71 @@
 
 <div class="notes-section">
     <p class="notes-heading">Historical background</p>
-    <p class="notes-row"><span class="notes-text">Nearly all major cities were built on rivers.</span></p>
-    <p class="notes-row"><span class="notes-text">Rivers were traditionally used for transport, fishing and recreation.</span></p>
-    <p class="notes-row"><span class="notes-text">Industrial development and rising populations led to:</span></p>
-    <p class="notes-row"><span class="notes-text" style="padding-left:20px;">— more sewage from houses discharged into the river</span></p>
-    <p class="notes-row">
-        <span class="notes-text" style="padding-left:20px;">— pollution from (31) ......................... on the river bank</span>
-        <input type="text" class="notes-input" data-q="31" autocomplete="off">
+    <p class="notes-text">Nearly all major cities were built on rivers.</p>
+    <p class="notes-text">Rivers were traditionally used for transport, fishing and recreation.</p>
+    <p class="notes-text">Industrial development and rising populations led to:</p>
+    <p class="notes-text indent">— more sewage from houses discharged into the river</p>
+    <p class="notes-text indent">— pollution from (31)
+        <span class="input-wrapper">
+            <input type="text" class="notes-input" data-q="31" autocomplete="off">
+        </span>
+        on the river bank
     </p>
-    <p class="notes-row">
-        <span class="notes-text">In 1957, the River Thames was biologically (32) .........................</span>
-        <input type="text" class="notes-input" data-q="32" autocomplete="off">
+    <p class="notes-text">In 1957, the River Thames was biologically (32)
+        <span class="input-wrapper">
+            <input type="text" class="notes-input" data-q="32" autocomplete="off">
+        </span>
     </p>
 </div>
 
 <div class="notes-section">
     <p class="notes-heading">Recent improvements</p>
-    <p class="notes-row">
-        <span class="notes-text">Seals and even a (33) ......................... have been seen in the River Thames.</span>
-        <input type="text" class="notes-input" data-q="33" autocomplete="off">
+    <p class="notes-text">Seals and even a (33)
+        <span class="input-wrapper">
+            <input type="text" class="notes-input" data-q="33" autocomplete="off">
+        </span>
+        have been seen in the River Thames.
     </p>
-    <p class="notes-row">
-        <span class="notes-text">Riverside warehouses are converted to restaurants and (34) ......................... .</span>
-        <input type="text" class="notes-input" data-q="34" autocomplete="off">
+    <p class="notes-text">Riverside warehouses are converted to restaurants and (34)
+        <span class="input-wrapper">
+            <input type="text" class="notes-input" data-q="34" autocomplete="off">
+        </span>.
     </p>
-    <p class="notes-row"><span class="notes-text">In Los Angeles, there are plans to:</span></p>
-    <p class="notes-row">
-        <span class="notes-text" style="padding-left:20px;">— build a riverside (35) .........................</span>
-        <input type="text" class="notes-input" data-q="35" autocomplete="off">
+    <p class="notes-text">In Los Angeles, there are plans to:</p>
+    <p class="notes-text indent">— build a riverside (35)
+        <span class="input-wrapper">
+            <input type="text" class="notes-input" data-q="35" autocomplete="off">
+        </span>
     </p>
-    <p class="notes-row">
-        <span class="notes-text" style="padding-left:20px;">— display (36) ......................... projects</span>
-        <input type="text" class="notes-input" data-q="36" autocomplete="off">
+    <p class="notes-text indent">— display (36)
+        <span class="input-wrapper">
+            <input type="text" class="notes-input" data-q="36" autocomplete="off">
+        </span>
+        projects
     </p>
-    <p class="notes-row">
-        <span class="notes-text">In Paris, (37) ......................... are created on the banks of the river every summer.</span>
-        <input type="text" class="notes-input" data-q="37" autocomplete="off">
+    <p class="notes-text">In Paris, (37)
+        <span class="input-wrapper">
+            <input type="text" class="notes-input" data-q="37" autocomplete="off">
+        </span>
+        are created on the banks of the river every summer.
     </p>
 </div>
 
 <div class="notes-section">
     <p class="notes-heading">Transport possibilities</p>
-    <p class="notes-row">
-        <span class="notes-text">Over 2 billion passengers already travel by (38) ......................... .</span>
-        <input type="text" class="notes-input" data-q="38" autocomplete="off">
+    <p class="notes-text">Over 2 billion passengers already travel by (38)
+        <span class="input-wrapper">
+            <input type="text" class="notes-input" data-q="38" autocomplete="off">
+        </span>.
     </p>
-    <p class="notes-row">
-        <span class="notes-text">Instead of road transport, goods could be transported by large freight barges and electric (39) ......................... or, in future, by (40) ......................... .</span>
-    </p>
-    <p class="notes-row">
-        <span class="notes-text" style="padding-left:20px;">Barges / electric (39) .........................</span>
-        <input type="text" class="notes-input" data-q="39" autocomplete="off">
-    </p>
-    <p class="notes-row">
-        <span class="notes-text" style="padding-left:20px;">Future: by (40) .........................</span>
-        <input type="text" class="notes-input" data-q="40" autocomplete="off">
+    <p class="notes-text">Instead of road transport, goods could be transported by large freight barges and electric (39)
+        <span class="input-wrapper">
+            <input type="text" class="notes-input" data-q="39" autocomplete="off">
+        </span>
+        or, in future, by (40)
+        <span class="input-wrapper">
+            <input type="text" class="notes-input" data-q="40" autocomplete="off">
+        </span>.
     </p>
 </div>
 
@@ -288,7 +300,7 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
     const rc = activeHighlight.getBoundingClientRect();
     noteBox.style.left = (rc.right + window.scrollX + 10) + 'px';
     noteBox.style.top = (rc.top + window.scrollY) + 'px';
-    noteBox.style.display = 'block';
+       noteBox.style.display = 'block';
     noteText.value = activeHighlight.getAttribute('data-note') || '';
     noteText.focus();
 });
@@ -333,3 +345,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
