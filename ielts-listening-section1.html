@@ -17,119 +17,24 @@
         .answer-table th { background-color: #f0f2f5; font-weight: bold; color: #1f3a5f; }
         .answer-input { width: 100%; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px; outline: none; transition: border-color 0.2s; }
         .answer-input:focus { border-color: #1f3a5f; box-shadow: 0 0 0 2px rgba(31,58,95,0.15); }
-        
-        /* === HIGHLIGHT SYSTEM — EXACT MATCH === */
-        .highlight {
-            background-color: #ffd700;
-            padding: 2px 4px;
-            border-radius: 2px;
-            cursor: pointer;
-            display: inline;
-            position: relative;
-            transition: background-color 0.2s;
-        }
+        .highlight { background-color: #ffd700; padding: 2px 4px; border-radius: 2px; cursor: pointer; display: inline; position: relative; transition: background-color 0.2s; }
         .highlight:hover { background-color: #ffeb3b; }
-        .note-marker {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            width: 18px;
-            height: 18px;
-            background: #1f3a5f;
-            color: white;
-            border-radius: 50%;
-            font-size: 11px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-        }
-        .context-menu {
-            position: absolute;
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
-            z-index: 9999;
-            display: none;
-            min-width: 180px;
-        }
+        .note-marker { position: absolute; top: -8px; right: -8px; width: 18px; height: 18px; background: #1f3a5f; color: white; border-radius: 50%; font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; z-index: 10; }
+        .context-menu { position: absolute; background: #fff; border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 2px 12px rgba(0,0,0,0.15); z-index: 9999; display: none; min-width: 180px; }
         .context-menu div { padding: 10px 14px; cursor: pointer; font-size: 14px; border-bottom: 1px solid #f0f0f0; }
         .context-menu div:last-child { border-bottom: none; }
         .context-menu div:hover { background: #f0f0f0; }
-        .note-box {
-            position: absolute;
-            width: 260px;
-            min-height: 80px;
-            background: #fffde7;
-            border: 1px solid #f9d423;
-            border-radius: 6px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-            z-index: 9990;
-            display: none;
-        }
-        .note-header {
-            background: #f9d423;
-            padding: 6px 10px;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: move;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: #333;
-        }
+        .note-box { position: absolute; width: 260px; min-height: 80px; background: #fffde7; border: 1px solid #f9d423; border-radius: 6px; box-shadow: 0 3px 10px rgba(0,0,0,0.15); z-index: 9990; display: none; }
+        .note-header { background: #f9d423; padding: 6px 10px; font-size: 13px; font-weight: bold; cursor: move; display: flex; justify-content: space-between; align-items: center; color: #333; }
         .note-close { cursor: pointer; font-weight: bold; font-size: 16px; line-height: 1; }
-        .note-textarea {
-            width: 100%;
-            min-height: 60px;
-            border: none;
-            padding: 10px;
-            font-size: 14px;
-            resize: vertical;
-            background: transparent;
-            outline: none;
-        }
-        
-        /* === NAVIGATION — EXACT MATCH === */
-        .question-status {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 5px;
-            margin: 30px 0 15px;
-            padding: 12px 15px;
-            background: #f0f2f5;
-            border-radius: 4px;
-            border: 1px solid #d0d5dd;
-        }
+        .note-textarea { width: 100%; min-height: 60px; border: none; padding: 10px; font-size: 14px; resize: vertical; background: transparent; outline: none; }
+        .question-status { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin: 30px 0 15px; padding: 12px 15px; background: #f0f2f5; border-radius: 4px; border: 1px solid #d0d5dd; }
         .part-label { font-size: 11px; font-weight: 600; color: #1f3a5f; margin-right: 4px; margin-left: 8px; }
-        .q-indicator {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 3px;
-            border: 1px solid #ddd;
-            background: #e5e7eb;
-            color: #333;
-            font-size: 11px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+        .q-indicator { width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 3px; border: 1px solid #ddd; background: #e5e7eb; color: #333; font-size: 11px; cursor: pointer; transition: all 0.2s; }
         .q-indicator.answered { background: #10b981 !important; color: white !important; border-color: #10b981 !important; }
         .clear-btn { background-color: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; }
         .clear-btn:hover { background-color: #b91c1c; }
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 10px;
-            padding-top: 15px;
-            border-top: 1px solid #eee;
-        }
+        .nav-container { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-top: 15px; border-top: 1px solid #eee; }
         .back-main-btn { background-color: #6b7280; color: white; border: none; padding: 10px 18px; border-radius: 4px; font-size: 15px; text-decoration: none; }
         .back-main-btn:hover { background-color: #4b5563; }
         .next-btn { background-color: #10b981; color: white; border: none; padding: 10px 18px; border-radius: 4px; font-size: 15px; text-decoration: none; }
@@ -137,13 +42,11 @@
     </style>
 </head>
 <body>
-    <!-- Right-Click Menu -->
     <div class="context-menu" id="contextMenu">
         <div id="menuHighlight">🖍️ Highlight</div>
         <div id="menuAddNote">📝 Add Note</div>
         <div id="menuRemove">❌ Remove Highlight & Note</div>
     </div>
-    <!-- Draggable Note Box -->
     <div class="note-box" id="noteBox">
         <div class="note-header" id="noteDragHandle">
             <span>📝 Note</span>
@@ -157,13 +60,11 @@
             <span style="font-size:15px; opacity:0.9;">Exam Mode</span>
         </div>
         <div class="content" id="passageArea">
-<!-- ========== PART 1 ========== -->
 <h2>PART 1 — Questions 1–10</h2>
 <div class="instruction">
     <strong>Complete the notes below.</strong><br>
     Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.
 </div>
-
 <table class="answer-table">
     <thead>
         <tr>
@@ -194,8 +95,6 @@
         </tr>
     </tbody>
 </table>
-
-<!-- ========== NAV AT BOTTOM ========== -->
 <div class="question-status">
     <span class="part-label">Section 1</span>
     <div class="q-indicator" data-q="1">1</div>
@@ -214,11 +113,9 @@
     <a href="index.html" class="back-main-btn">← Home</a>
     <a href="ielts-listening-section2.html" class="next-btn">Next: Section 2 →</a>
 </div>
-        </div><!-- /content -->
-    </div><!-- /container -->
-
+        </div>
+    </div>
 <script>
-// ✅ Cambridge 20 Test 1 — Listening Section 1 — FULL FEATURES
 const STORAGE_KEY = 'Cambridge20_Test1_Listening';
 const passageId = 'listening-section1';
 let currentRange = null;
@@ -232,6 +129,11 @@ function updateStatus() {
         const val = input ? input.value.trim() : '';
         btn.classList.toggle('answered', val !== '');
     }
+}
+
+function saveAnswer(q, val) {
+    localStorage.setItem(`${STORAGE_KEY}_q${q}`, val);
+    updateStatus();
 }
 
 function saveHighlights() {
@@ -260,18 +162,13 @@ const noteText = document.getElementById('noteText');
 const noteClose = document.getElementById('noteClose');
 let isDraggingNote = false, offsetX = 0, offsetY = 0;
 
-noteClose.addEventListener('click', () => {
-    noteBox.style.display = 'none';
-    activeHighlight = null;
-});
-
+noteClose.addEventListener('click', () => { noteBox.style.display = 'none'; activeHighlight = null; });
 noteText.addEventListener('input', () => {
     if (activeHighlight) {
         activeHighlight.setAttribute('data-note', noteText.value);
         saveHighlights();
     }
 });
-
 document.addEventListener('mousedown', e => {
     if (!e.target.closest('.note-header')) return;
     isDraggingNote = true;
@@ -279,17 +176,14 @@ document.addEventListener('mousedown', e => {
     offsetX = e.clientX - rc.left;
     offsetY = e.clientY - rc.top;
 });
-
 document.addEventListener('mousemove', e => {
     if (!isDraggingNote) return;
     noteBox.style.left = (e.clientX - offsetX) + 'px';
     noteBox.style.top = (e.clientY - offsetY) + 'px';
 });
-
 document.addEventListener('mouseup', () => isDraggingNote = false);
 
 const ctxMenu = document.getElementById('contextMenu');
-
 document.addEventListener('contextmenu', e => {
     const sel = window.getSelection();
     const targetHl = e.target.closest('.highlight');
@@ -312,10 +206,7 @@ document.addEventListener('contextmenu', e => {
         activeHighlight = null;
     }
 });
-
-document.addEventListener('click', e => {
-    if (!ctxMenu.contains(e.target)) ctxMenu.style.display = 'none';
-});
+document.addEventListener('click', e => { if (!ctxMenu.contains(e.target)) ctxMenu.style.display = 'none'; });
 
 document.getElementById('menuHighlight').addEventListener('click', () => {
     if (!currentRange) return;
@@ -350,4 +241,33 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
         const m = document.createElement('span');
         m.className = 'note-marker';
         m.textContent = '!';
-        activeHighlight.appendChild(m
+        activeHighlight.appendChild(m);
+    }
+    const rc = activeHighlight.getBoundingClientRect();
+    noteBox.style.left = (rc.right + window.scrollX + 10) + 'px';
+    noteBox.style.top = (rc.top + window.scrollY) + 'px';
+    noteBox.style.display = 'block';
+    noteText.value = activeHighlight.getAttribute('data-note') || '';
+    noteText.focus();
+});
+
+document.getElementById('menuRemove').addEventListener('click', () => {
+    ctxMenu.style.display = 'none';
+    noteBox.style.display = 'none';
+    if (!activeHighlight) return;
+    activeHighlight.parentNode.replaceChild(document.createTextNode(activeHighlight.textContent), activeHighlight);
+    activeHighlight.parentNode.normalize();
+    activeHighlight = null;
+    saveHighlights();
+});
+
+function clearAll() {
+    if (!confirm('⚠️ Clear all answers and highlights? This cannot be undone.')) return;
+    for (let q = 1; q <= 10; q++) localStorage.removeItem(`${STORAGE_KEY}_q${q}`);
+    localStorage.removeItem(`${passageId}_highlights`);
+    document.querySelectorAll('.answer-input').forEach(i => i.value = '');
+    document.querySelectorAll('.highlight').forEach(h => {
+        h.parentNode.replaceChild(document.createTextNode(h.textContent), h);
+        h.parentNode.normalize();
+    });
+   
