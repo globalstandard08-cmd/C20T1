@@ -254,8 +254,8 @@ document.addEventListener('contextmenu', e => {
     }
 });
 
-document.addEventListener('click', e =>
-    if (!ctxMenu.contains(e.target)) ctxMenu.style.display = 'none';
+document.addEventListener('click', e => {
+       if (!ctxMenu.contains(e.target)) ctxMenu.style.display = 'none';
 });
 
 document.getElementById('menuHighlight').addEventListener('click', () => {
@@ -350,3 +350,4 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 </body>
 </html>
+
