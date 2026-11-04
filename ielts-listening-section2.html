@@ -5,14 +5,12 @@ let currentRange = null;
 let activeHighlight = null;
 
 function updateStatus() {
-    // Q11-16: Radio (single answer)
     for (let q = 11; q <= 16; q++) {
         const btn = document.querySelector(`.q-indicator[data-q="${q}"]`);
         if (!btn) continue;
         const checked = document.querySelector(`input[name="q${q}"]:checked`);
         btn.classList.toggle('answered', !!checked);
     }
-    // Q17-20: Checkbox (TWO answers each)
     for (let q = 17; q <= 20; q++) {
         const btn = document.querySelector(`.q-indicator[data-q="${q}"]`);
         if (!btn) continue;
@@ -89,8 +87,7 @@ document.addEventListener('contextmenu', e => {
     } else if (isSelectionValid(sel)) {
         e.preventDefault();
         currentRange = sel.getRangeAt(0).cloneRange();
-        const
-const rc = currentRange.getBoundingClientRect();
+        const rc = currentRange.getBoundingClientRect();
         ctxMenu.style.left = (rc.left + window.scrollX) + 'px';
         ctxMenu.style.top = (rc.bottom + window.scrollY + 5) + 'px';
         ctxMenu.style.display = 'block';
@@ -172,7 +169,6 @@ function clearAll() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Restore radio answers Q11-16
     for (let q = 11; q <= 16; q++) {
         const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
         document.querySelectorAll(`input[name="q${q}"]`).forEach(inp => {
@@ -180,7 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
             inp.addEventListener('change', () => saveAnswer(q, inp.value));
         });
     }
-    // Restore checkbox answers Q17-20
     for (let q = 17; q <= 20; q++) {
         const saved = (localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '').split(',');
         document.querySelectorAll(`input[data-q="${q}"]`).forEach(inp => {
