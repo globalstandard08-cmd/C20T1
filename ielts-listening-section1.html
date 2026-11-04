@@ -17,8 +17,8 @@
         .answer-table th { background-color: #f0f2f5; font-weight: bold; color: #1f3a5f; }
         .answer-input { width: 100%; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px; outline: none; transition: border-color 0.2s; }
         .answer-input:focus { border-color: #1f3a5f; box-shadow: 0 0 0 2px rgba(31,58,95,0.15); }
-
-        /* === HIGHLIGHT SYSTEM — FULLY WORKING === */
+        
+        /* === HIGHLIGHT SYSTEM — EXACT MATCH === */
         .highlight {
             background-color: #ffd700;
             padding: 2px 4px;
@@ -91,8 +91,8 @@
             background: transparent;
             outline: none;
         }
-
-        /* === NAVIGATION === */
+        
+        /* === NAVIGATION — EXACT MATCH === */
         .question-status {
             display: flex;
             flex-wrap: wrap;
@@ -151,7 +151,6 @@
         </div>
         <textarea class="note-textarea" id="noteText" placeholder="Type your note here…"></textarea>
     </div>
-
     <div class="container">
         <div class="header-bar">
             <span>LISTENING — SECTION 1</span>
@@ -178,20 +177,20 @@
         <tr>
             <td><strong>The Junction</strong></td>
             <td>Greyson Street, near the station</td>
-            <td>Good for people who are especially keen on <input type="text" class="answer-input" data-q="1" maxlength="20" autocomplete="off" spellcheck="false"></td>
-            <td>Quite expensive<br>The <input type="text" class="answer-input" data-q="2" maxlength="20" autocomplete="off" spellcheck="false"> is a good place for a drink</td>
+            <td>Good for people who are especially keen on <input type="text" class="answer-input" data-q="1" autocomplete="off" spellcheck="false"></td>
+            <td>Quite expensive<br>The <input type="text" class="answer-input" data-q="2" autocomplete="off" spellcheck="false"> is a good place for a drink</td>
         </tr>
         <tr>
             <td><strong>Paloma</strong></td>
             <td>In Bow Street next to the cinema</td>
-            <td><input type="text" class="answer-input" data-q="3" maxlength="20" autocomplete="off" spellcheck="false"> food, good for sharing</td>
-            <td>Staff are very friendly<br>Need to pay £50 deposit<br>A limited selection of <input type="text" class="answer-input" data-q="4" maxlength="20" autocomplete="off" spellcheck="false"> food on the menu</td>
+            <td><input type="text" class="answer-input" data-q="3" autocomplete="off" spellcheck="false"> food, good for sharing</td>
+            <td>Staff are very friendly<br>Need to pay £50 deposit<br>A limited selection of <input type="text" class="answer-input" data-q="4" autocomplete="off" spellcheck="false"> food on the menu</td>
         </tr>
         <tr>
-            <td>The <input type="text" class="answer-input" data-q="5" maxlength="20" autocomplete="off" spellcheck="false"></td>
-            <td>At the top of a <input type="text" class="answer-input" data-q="6" maxlength="20" autocomplete="off" spellcheck="false"></td>
-            <td>A famous chef<br>All the <input type="text" class="answer-input" data-q="7" maxlength="20" autocomplete="off" spellcheck="false"> are very good<br>Only uses <input type="text" class="answer-input" data-q="8" maxlength="20" autocomplete="off" spellcheck="false"> ingredients</td>
-            <td>Set lunch costs £<input type="text" class="answer-input" data-q="9" maxlength="10" autocomplete="off" spellcheck="false"> per person<br>Portions probably of <input type="text" class="answer-input" data-q="10" maxlength="20" autocomplete="off" spellcheck="false"> size</td>
+            <td>The <input type="text" class="answer-input" data-q="5" autocomplete="off" spellcheck="false"></td>
+            <td>At the top of a <input type="text" class="answer-input" data-q="6" autocomplete="off" spellcheck="false"></td>
+            <td>A famous chef<br>All the <input type="text" class="answer-input" data-q="7" autocomplete="off" spellcheck="false"> are very good<br>Only uses <input type="text" class="answer-input" data-q="8" autocomplete="off" spellcheck="false"> ingredients</td>
+            <td>Set lunch costs £<input type="text" class="answer-input" data-q="9" autocomplete="off" spellcheck="false"> per person<br>Portions probably of <input type="text" class="answer-input" data-q="10" autocomplete="off" spellcheck="false"> size</td>
         </tr>
     </tbody>
 </table>
@@ -225,7 +224,6 @@ const passageId = 'listening-section1';
 let currentRange = null;
 let activeHighlight = null;
 
-// --- Answer Status ---
 function updateStatus() {
     for (let q = 1; q <= 10; q++) {
         const btn = document.querySelector(`.q-indicator[data-q="${q}"]`);
@@ -236,7 +234,6 @@ function updateStatus() {
     }
 }
 
-// --- Highlight Persistence ---
 function saveHighlights() {
     const highlights = document.querySelectorAll('#passageArea .highlight');
     const data = Array.from(highlights).map(h => ({
@@ -246,7 +243,6 @@ function saveHighlights() {
     localStorage.setItem(`${passageId}_highlights`, JSON.stringify(data));
 }
 
-// --- Selection Validation ---
 function isSelectionValid(sel) {
     if (!sel || sel.isCollapsed || !sel.toString().trim()) return false;
     try {
@@ -259,7 +255,6 @@ function isSelectionValid(sel) {
     } catch { return false; }
 }
 
-// --- Note Box & Drag ---
 const noteBox = document.getElementById('noteBox');
 const noteText = document.getElementById('noteText');
 const noteClose = document.getElementById('noteClose');
@@ -293,7 +288,6 @@ document.addEventListener('mousemove', e => {
 
 document.addEventListener('mouseup', () => isDraggingNote = false);
 
-// --- Context Menu ---
 const ctxMenu = document.getElementById('contextMenu');
 
 document.addEventListener('contextmenu', e => {
@@ -323,7 +317,6 @@ document.addEventListener('click', e => {
     if (!ctxMenu.contains(e.target)) ctxMenu.style.display = 'none';
 });
 
-// --- Highlight Action ---
 document.getElementById('menuHighlight').addEventListener('click', () => {
     if (!currentRange) return;
     try {
@@ -338,7 +331,6 @@ document.getElementById('menuHighlight').addEventListener('click', () => {
     ctxMenu.style.display = 'none';
 });
 
-// --- Add Note Action ---
 document.getElementById('menuAddNote').addEventListener('click', () => {
     ctxMenu.style.display = 'none';
     if (!activeHighlight) {
@@ -350,4 +342,12 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
             currentRange.deleteContents();
             currentRange.insertNode(sp);
             activeHighlight = sp;
-            window.getSelection().removeAllRanges
+            window.getSelection().removeAllRanges();
+            saveHighlights();
+        } catch { alert('⚠️ Select smaller text please.'); return; }
+    }
+    if (!activeHighlight.querySelector('.note-marker')) {
+        const m = document.createElement('span');
+        m.className = 'note-marker';
+        m.textContent = '!';
+        activeHighlight.appendChild(m
