@@ -3,24 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS Listening — Part 1 Questions 1–10</title>
+    <title>IELTS Listening — Section 1</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
         body { background-color: #f4f6f9; padding: 20px; line-height: 1.7; }
         .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden; }
-        .header-bar { background-color: #1f3a5f; color: white; padding: 15px 25px; font-size: 18px; font-weight: bold; text-align: center; }
+        .header-bar { background-color: #1f3a5f; color: white; padding: 15px 25px; font-size: 18px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
         .content { padding: 25px 30px; }
-        .part-title { font-size: 18px; font-weight: bold; margin-bottom: 8px; }
-        .instruction { margin-bottom: 25px; font-size: 16px; }
-        
-        table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
-        table th, table td { border: 1px solid #ccc; padding: 12px 15px; vertical-align: top; font-size: 15px; }
-        table th { background-color: #f0f2f5; font-weight: bold; text-align: left; }
-        .q-input { width: 120px; padding: 5px 8px; border: 1px solid #bbb; border-radius: 3px; font-size: 15px; }
-        .q-input:focus { outline: none; border-color: #1f3a5f; box-shadow: 0 0 3px rgba(31,58,95,0.3); }
-        .q-input.filled { background-color: #e6f0ff; border-color: #1f3a5f; }
-
-        /* === HIGHLIGHT & NOTE SYSTEM — FULLY RESTORED === */
+        h2 { color: #1f3a5f; margin: 30px 0 15px; font-size: 22px; padding-bottom: 8px; border-bottom: 1px solid #eee; }
+        .instruction { background-color: #f8fbfe; border-left: 4px solid #1f3a5f; padding: 15px; margin-bottom: 25px; border-radius: 4px; font-weight: 500; }
+        .answer-table { width: 100%; border-collapse: collapse; margin: 20px 0 30px; font-size: 16px; }
+        .answer-table th, .answer-table td { border: 1px solid #ccc; padding: 12px 15px; vertical-align: middle; }
+        .answer-table th { background-color: #f0f2f5; font-weight: bold; color: #1f3a5f; }
+        .answer-input { width: 100%; padding: 6px 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 15px; outline: none; transition: border-color 0.2s; }
+        .answer-input:focus { border-color: #1f3a5f; box-shadow: 0 0 0 2px rgba(31,58,95,0.15); }
+        /* === HIGHLIGHT SYSTEM === */
         .highlight {
             background-color: #ffd700;
             padding: 2px 4px;
@@ -93,14 +90,13 @@
             background: transparent;
             outline: none;
         }
-
-        /* Navigation */
+        /* === NAVIGATION === */
         .question-status {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             gap: 5px;
-            margin: 20px 0 15px;
+            margin: 30px 0 15px;
             padding: 12px 15px;
             background: #f0f2f5;
             border-radius: 4px;
@@ -118,8 +114,10 @@
             background: #e5e7eb;
             color: #333;
             font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
         }
-        .q-indicator.answered { background: #10b981; color: white; border-color: #10b981; }
+        .q-indicator.answered { background: #10b981 !important; color: white !important; border-color: #10b981 !important; }
         .clear-btn { background-color: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; }
         .clear-btn:hover { background-color: #b91c1c; }
         .nav-container {
@@ -130,9 +128,10 @@
             padding-top: 15px;
             border-top: 1px solid #eee;
         }
-        .nav-btn { background-color: #6b7280; color: white; border: none; padding: 10px 18px; border-radius: 4px; font-size: 15px; text-decoration: none; }
-        .nav-btn.next { background-color: #10b981; }
-        .nav-btn:hover { opacity: 0.9; }
+        .back-main-btn { background-color: #6b7280; color: white; border: none; padding: 10px 18px; border-radius: 4px; font-size: 15px; text-decoration: none; }
+        .back-main-btn:hover { background-color: #4b5563; }
+        .next-btn { background-color: #10b981; color: white; border: none; padding: 10px 18px; border-radius: 4px; font-size: 15px; text-decoration: none; }
+        .next-btn:hover { background-color: #059669; }
     </style>
 </head>
 <body>
@@ -142,7 +141,6 @@
         <div id="menuAddNote">📝 Add Note</div>
         <div id="menuRemove">❌ Remove Highlight & Note</div>
     </div>
-
     <!-- Draggable Note Box -->
     <div class="note-box" id="noteBox">
         <div class="note-header" id="noteDragHandle">
@@ -151,91 +149,87 @@
         </div>
         <textarea class="note-textarea" id="noteText" placeholder="Type your note here…"></textarea>
     </div>
-
     <div class="container">
-        <div class="header-bar">LISTENING</div>
-        <div class="content" id="passageArea">
-            <h2 class="part-title">PART 1 &nbsp;&nbsp; Questions 1–10</h2>
-            <div class="instruction">
-                Complete the notes below.<br>
-                <strong>Write ONE WORD AND/OR A NUMBER for each answer.</strong>
-            </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name of restaurant</th>
-                        <th>Location</th>
-                        <th>Reason for recommendation</th>
-                        <th>Other comments</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>The Junction</td>
-                        <td>Greyson Street, near the station</td>
-                        <td>Good for people who are especially keen on <input type="text" class="q-input" data-q="1"></td>
-                        <td>Quite expensive<br>The <input type="text" class="q-input" data-q="2"> is a good place for a drink</td>
-                    </tr>
-                    <tr>
-                        <td>Paloma</td>
-                        <td>In Bow Street next to the cinema</td>
-                        <td><input type="text" class="q-input" data-q="3"> Food, good for sharing</td>
-                        <td>Staff are very friendly<br>Need to pay £50 deposit<br>A limited selection of <input type="text" class="q-input" data-q="4"> Food on the menu</td>
-                    </tr>
-                    <tr>
-                        <td>The <input type="text" class="q-input" data-q="5"></td>
-                        <td>At the top of a <input type="text" class="q-input" data-q="6"></td>
-                        <td>A famous chef<br>All the <input type="text" class="q-input" data-q="7"> are very good<br>Only uses <input type="text" class="q-input" data-q="8"> ingredients</td>
-                        <td>Set lunch costs <input type="text" class="q-input" data-q="9"> per person<br>Portions probably of <input type="text" class="q-input" data-q="10"> size</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="question-status">
-                <span class="part-label">Part 1</span>
-                <div class="q-indicator" data-q="1">1</div>
-                <div class="q-indicator" data-q="2">2</div>
-                <div class="q-indicator" data-q="3">3</div>
-                <div class="q-indicator" data-q="4">4</div>
-                <div class="q-indicator" data-q="5">5</div>
-                <div class="q-indicator" data-q="6">6</div>
-                <div class="q-indicator" data-q="7">7</div>
-                <div class="q-indicator" data-q="8">8</div>
-                <div class="q-indicator" data-q="9">9</div>
-                <div class="q-indicator" data-q="10">10</div>
-            </div>
-
-            <button class="clear-btn" onclick="clearAll()">🗑️ Clear All Answers & Highlights</button>
-
-            <div class="nav-container">
-                <a href="index.html" class="nav-btn">← Home</a>
-                <a href="listening-part2.html" class="nav-btn next">Next →</a>
-            </div>
+        <div class="header-bar">
+            <span>LISTENING — SECTION 1</span>
+            <span style="font-size:15px; opacity:0.9;">Exam Mode</span>
         </div>
-    </div>
+        <div class="content" id="passageArea">
+<!-- ========== PART 1 ========== -->
+<h2>PART 1 — Questions 1–10</h2>
+<div class="instruction">
+    <strong>Complete the notes below.</strong><br>
+    Write <strong>ONE WORD AND/OR A NUMBER</strong> for each answer.
+</div>
+
+<table class="answer-table">
+    <thead>
+        <tr>
+            <th>Name of restaurant</th>
+            <th>Location</th>
+            <th>Reason for recommendation</th>
+            <th>Other comments</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>The Junction</strong></td>
+            <td>Greyson Street, near the station</td>
+            <td>Good for people who are especially keen on <input type="text" class="answer-input" data-q="1" maxlength="20" autocomplete="off" spellcheck="false"></td>
+            <td>Quite expensive<br>The <input type="text" class="answer-input" data-q="2" maxlength="20" autocomplete="off" spellcheck="false"> is a good place for a drink</td>
+        </tr>
+        <tr>
+            <td><strong>Paloma</strong></td>
+            <td>In Bow Street next to the cinema</td>
+            <td><input type="text" class="answer-input" data-q="3" maxlength="20" autocomplete="off" spellcheck="false"> Food, good for sharing</td>
+            <td>Staff are very friendly<br>Need to pay £50 deposit<br>A limited selection of <input type="text" class="answer-input" data-q="4" maxlength="20" autocomplete="off" spellcheck="false"> Food on the menu</td>
+        </tr>
+        <tr>
+            <td>The <input type="text" class="answer-input" data-q="5" maxlength="20" autocomplete="off" spellcheck="false"></td>
+            <td>At the top of a <input type="text" class="answer-input" data-q="6" maxlength="20" autocomplete="off" spellcheck="false"></td>
+            <td>A famous chef<br>All the <input type="text" class="answer-input" data-q="7" maxlength="20" autocomplete="off" spellcheck="false"> are very good<br>Only uses <input type="text" class="answer-input" data-q="8" maxlength="20" autocomplete="off" spellcheck="false"> ingredients</td>
+            <td>Set lunch costs £<input type="text" class="answer-input" data-q="9" maxlength="10" autocomplete="off" spellcheck="false"> per person<br>Portions probably of <input type="text" class="answer-input" data-q="10" maxlength="20" autocomplete="off" spellcheck="false"> size</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- ========== NAV AT BOTTOM ========== -->
+<div class="question-status">
+    <span class="part-label">Section 1</span>
+    <div class="q-indicator" data-q="1">1</div>
+    <div class="q-indicator" data-q="2">2</div>
+    <div class="q-indicator" data-q="3">3</div>
+    <div class="q-indicator" data-q="4">4</div>
+    <div class="q-indicator" data-q="5">5</div>
+    <div class="q-indicator" data-q="6">6</div>
+    <div class="q-indicator" data-q="7">7</div>
+    <div class="q-indicator" data-q="8">8</div>
+    <div class="q-indicator" data-q="9">9</div>
+    <div class="q-indicator" data-q="10">10</div>
+</div>
+<button class="clear-btn" onclick="clearAll()">🗑️ Clear All Answers & Highlights</button>
+<div class="nav-container">
+    <a href="#" class="back-main-btn" style="visibility:hidden;">← Previous</a>
+    <a href="ielts-listening-section2.html" class="next-btn">Next: Section 2 →</a>
+</div>
+        </div><!-- /content -->
+    </div><!-- /container -->
 
 <script>
-const STORAGE_KEY = 'IELTS_Listening_Part1_Q1-10';
-const passageId = 'listening-part1-q1-10';
+// ✅ Cambridge 20 Test 1 — Listening Section 1
+const STORAGE_KEY = 'Cambridge20_Test1_Listening';
+const passageId = 'listening-section1';
 let currentRange = null;
 let activeHighlight = null;
 
 function updateStatus() {
     for (let q = 1; q <= 10; q++) {
-        const input = document.querySelector(`.q-input[data-q="${q}"]`);
-        const indicator = document.querySelector(`.q-indicator[data-q="${q}"]`);
-        if (!input || !indicator) continue;
-        const val = (localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '').trim();
-        input.value = val;
-        input.classList.toggle('filled', val.length > 0);
-        indicator.classList.toggle('answered', val.length > 0);
+        const btn = document.querySelector(`.q-indicator[data-q="${q}"]`);
+        if (!btn) continue;
+        const input = document.querySelector(`.answer-input[data-q="${q}"]`);
+        const val = input ? input.value.trim() : '';
+        btn.classList.toggle('answered', val !== '');
     }
-}
-
-function saveAnswer(q, val) {
-    localStorage.setItem(`${STORAGE_KEY}_q${q}`, val.trim());
-    updateStatus();
 }
 
 function saveHighlights() {
@@ -247,6 +241,21 @@ function saveHighlights() {
     localStorage.setItem(`${passageId}_highlights`, JSON.stringify(data));
 }
 
+function restoreHighlights() {
+    try {
+        const raw = localStorage.getItem(`${passageId}_highlights`);
+        if (!raw) return;
+        const list = JSON.parse(raw);
+        // Remove existing highlights first
+        document.querySelectorAll('#passageArea .highlight').forEach(h => {
+            h.parentNode.replaceChild(document.createTextNode(h.textContent), h);
+            h.parentNode.normalize();
+        });
+        // Note: full restoration needs saved position context — this is placeholder
+        // Highlights will persist as you create them
+    } catch {}
+}
+
 function isSelectionValid(sel) {
     if (!sel || sel.isCollapsed || !sel.toString().trim()) return false;
     try {
@@ -254,7 +263,7 @@ function isSelectionValid(sel) {
         const p = r.commonAncestorContainer.nodeType === Node.TEXT_NODE
             ? r.commonAncestorContainer.parentElement : r.commonAncestorContainer;
         const inArea = document.getElementById('passageArea').contains(p);
-        const inInput = p.closest('input,textarea,button,select,.context-menu,.note-box');
+        const inInput = p.closest('input,textarea,button,select,.context-menu,.note-box,table');
         return inArea && !inInput;
     } catch { return false; }
 }
@@ -293,6 +302,7 @@ document.addEventListener('mousemove', e => {
 document.addEventListener('mouseup', () => isDraggingNote = false);
 
 const ctxMenu = document.getElementById('contextMenu');
+
 document.addEventListener('contextmenu', e => {
     const sel = window.getSelection();
     const targetHl = e.target.closest('.highlight');
@@ -336,31 +346,4 @@ document.getElementById('menuHighlight').addEventListener('click', () => {
 
 document.getElementById('menuAddNote').addEventListener('click', () => {
     ctxMenu.style.display = 'none';
-    if (!activeHighlight) {
-        if (!currentRange) return;
-        try {
-            const sp = document.createElement('span');
-            sp.className = 'highlight';
-            sp.textContent = currentRange.toString();
-            currentRange.deleteContents();
-            currentRange.insertNode(sp);
-            activeHighlight = sp;
-            window.getSelection().removeAllRanges();
-            saveHighlights();
-        } catch { alert('⚠️ Select smaller text please.'); return; }
-    }
-    if (!activeHighlight.querySelector('.note-marker')) {
-        const m = document.createElement('span');
-        m.className = 'note-marker';
-        m.textContent = '!';
-        activeHighlight.appendChild(m);
-    }
-    const rc = activeHighlight.getBoundingClientRect();
-    noteBox.style.left = (rc.right + window.scrollX + 10) + 'px';
-    noteBox.style.top = (rc.top + window.scrollY) + 'px';
-    noteBox.style.display = 'block';
-    noteText.value = activeHighlight.getAttribute('data-note') || '';
-    noteText.focus();
-});
-
-document.getElementById('menuRemove').addEventListener('click', ()
+    if (!activeHighlight
