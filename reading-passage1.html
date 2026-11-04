@@ -1,314 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IELTS Reading — Passage 1</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
-        html, body { background-color: #ffffff; height: 100%; overflow-y: auto; }
-        
-        /* TOP BAR */
-        .top-bar { 
-            background-color: #ffffff; 
-            padding: 10px 25px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            position: sticky; 
-            top: 0; 
-            z-index: 100; 
-            border-bottom: 1px solid #e5e5e5;
-        }
-        .logo { height: 55px; width: auto; }
-        
-        /* MAIN TWO-COLUMN LAYOUT — DRAGGABLE */
-        .main-grid { display: flex; min-height: calc(100vh - 75px - 48px); }
-        
-        /* LEFT: PASSAGE PANEL */
-        .passage-pane { 
-            width: calc(50% - 6px); 
-            background: #ffffff; 
-            overflow-y: auto; 
-            padding: 25px; 
-            max-height: calc(100vh - 75px - 48px); 
-            position: sticky; 
-            top: 75px; 
-        }
-        .exam-title {
-            text-align: center;
-            color: #1f3a5f;
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #1f3a5f;
-        }
-        .instruction { 
-            background-color: #f9f9f9; 
-            border-left: 3px solid #1f3a5f; 
-            padding: 12px; 
-            margin-bottom: 18px; 
-            border-radius: 4px; 
-            font-weight: 500; 
-            font-size: 15px; 
-            line-height: 1.6;
-        }
-        .passage-text { font-size: 16px; line-height: 1.7; }
-        .passage-text p { margin-bottom: 14px; text-align: justify; }
-        .para-label { font-weight: bold; color: #1f3a5f; display: inline-block; min-width: 24px; }
-        
-        /* DRAGGABLE DIVIDER */
-        .divider {
-            width: 12px;
-            background-color: #e0e0e0;
-            cursor: col-resize;
-            flex-shrink: 0;
-            position: relative;
-            border-left: 1px solid #d0d0d0;
-            border-right: 1px solid #d0d0d0;
-        }
-        .divider:hover, .divider.active {
-            background-color: #b8b8b8;
-        }
-        .divider::after {
-            content: "⋮⋮";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #888;
-            font-size: 10px;
-            letter-spacing: -2px;
-            pointer-events: none;
-        }
-        
-        /* RIGHT: QUESTIONS PANEL */
-        .questions-pane { 
-            width: calc(50% - 6px); 
-            background: #ffffff; 
-            overflow-y: auto; 
-            padding: 25px; 
-            max-height: calc(100vh - 75px - 48px); 
-            position: sticky; 
-            top: 75px; 
-        }
-        .questions-block { margin-bottom: 35px; }
-        .questions-block h3 { color: #1f3a5f; margin-bottom: 10px; font-size: 18px; }
-        .q-row { display: flex; align-items: flex-start; gap: 10px; margin: 14px 0; font-size: 16px; flex-wrap: wrap; }
-        .q-row.current { 
-            background-color: #eaf1fa; 
-            padding: 10px 8px; 
-            border-radius: 4px;
-            margin-left: -8px;
-            margin-right: -8px;
-        }
-        .q-num { font-weight: bold; min-width: 28px; color: #1f3a5f; flex-shrink: 0; }
-        .ans-box {
-            width: 160px;
-            height: 36px;
-            border: 1px solid #333;
-            border-radius: 2px;
-            padding: 0 8px;
-            font-weight: bold;
-            font-size: 15px;
-            text-transform: uppercase;
-            background: #fff;
-            outline: none;
-        }
-        .ans-box.filled { background: #f5f8ff; border-color: #1f3a5f; }
-        .input-answer { 
-            width: 220px; 
-            padding: 7px 10px; 
-            border: 1px solid #ddd; 
-            border-radius: 4px; 
-            font-size: 16px; 
-            background: #ffffff; 
-        }
-        .input-answer:focus { outline: none; border-color: #1f3a5f; }
-        .input-answer.filled { background-color: #f5f8ff; border-color: #1f3a5f; }
-        
-        /* HIGHLIGHT — works on BOTH sides */
-        .highlight { 
-            background-color: #ffd700; 
-            padding: 1px 3px; 
-            border-radius: 2px; 
-            cursor: pointer; 
-            display: inline; 
-            color: #000; 
-            position: relative; 
-        }
-        .note-marker { 
-            position: absolute; 
-            top: -8px; 
-            right: -8px; 
-            width: 18px; 
-            height: 18px; 
-            background: #1f3a5f; 
-            color: white; 
-            border-radius: 50%; 
-            font-size: 11px; 
-            font-weight: bold; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            cursor: pointer; 
-            z-index: 10; 
-        }
-        .context-menu { 
-            position: absolute; 
-            background: #ffffff; 
-            border: 1px solid #ddd; 
-            border-radius: 4px; 
-            box-shadow: 0 2px 12px rgba(0,0,0,0.1); 
-            z-index: 9999; 
-            display: none; 
-            min-width: 180px; 
-        }
-        .context-menu div { 
-            padding: 10px 14px; 
-            cursor: pointer; 
-            font-size: 14px; 
-            border-bottom: 1px solid #f5f5f5; 
-        }
-        .context-menu div:last-child { border-bottom: none; }
-        .context-menu div:hover { background: #f5f5f5; }
-        
-        /* DRAGGABLE NOTE BOX */
-        .note-box { 
-            position: absolute; 
-            width: 260px; 
-            min-height: 80px; 
-            background: #fffde7; 
-            border: 1px solid #f9d423; 
-            border-radius: 6px; 
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1); 
-            z-index: 9990; 
-            display: none; 
-        }
-        .note-header { 
-            background: #f9d423; 
-            padding: 6px 10px; 
-            font-size: 13px; 
-            font-weight: bold; 
-            cursor: move; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            color: #333; 
-        }
-        .note-close { cursor: pointer; font-weight: bold; font-size: 16px; line-height: 1; }
-        .note-textarea { 
-            width: 100%; 
-            min-height: 60px; 
-            border: none; 
-            padding: 10px; 
-            font-size: 14px; 
-            resize: vertical; 
-            background: transparent; 
-            outline: none; 
-        }
-        
-        /* BOTTOM NAVIGATION */
-        .bottom-nav { 
-            min-height: 48px; 
-            background: #ffffff; 
-            border-top: 1px solid #eee; 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between;
-            padding: 8px 15px; 
-            gap: 8px; 
-            overflow-x: auto;
-            overflow-y: hidden;
-            flex-wrap: nowrap;
-            position: sticky; 
-            bottom: 0; 
-            z-index: 90; 
-        }
-        .nav-group {
-            display: flex;
-            align-items: center;
-            gap: 2px;
-            flex-wrap: nowrap;
-        }
-        .part-label { 
-            font-size: 9px; 
-            font-weight: 600; 
-            color: #1f3a5f; 
-            margin: 0 4px; 
-            white-space: nowrap; 
-        }
-        .q-indicator { 
-            width: 24px; 
-            height: 24px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            border-radius: 3px; 
-            border: 1px solid #ddd; 
-            background: #fff; 
-            color: #333; 
-            font-size: 11px; 
-            cursor: pointer; 
-            transition: all 0.2s; 
-            flex-shrink: 0; 
-        }
-        .q-indicator:hover { border-color: #1f3a5f; }
-        .q-indicator.answered { 
-            background: #10b981 !important; 
-            color: white !important; 
-            border-color: #10b981 !important; 
-        }
-        .q-indicator.current { 
-            background-color: #eaf1fa; 
-            border-color: #1f3a5f;
-            border-width: 2px;
-            font-weight: bold;
-        }
-        
-        .back-btn {
-            padding: 6px 14px;
-            background-color: #6b7280;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 13px;
-            cursor: pointer;
-            font-weight: bold;
-            flex-shrink: 0;
-            text-decoration: none;
-        }
-        .back-btn:hover { background-color: #4b5563; }
-        .next-passage-btn {
-            padding: 6px 14px;
-            background-color: #10b981;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            font-size: 13px;
-            cursor: pointer;
-            font-weight: bold;
-            flex-shrink: 0;
-            text-decoration: none;
-        }
-        .next-passage-btn:hover { background-color: #059669; }
-        .clear-btn { 
-            background-color: #ef4444; 
-            color: white; 
-            border: none; 
-            padding: 6px 12px; 
-            border-radius: 4px; 
-            cursor: pointer; 
-            font-size: 12px; 
-            font-weight: bold; 
-            white-space: nowrap; 
-            flex-shrink: 0;
-        }
-        .clear-btn:hover { background-color: #dc2626; }
-    </style>
-</head>
-<body>
     <!-- Right-click Menu -->
     <div class="context-menu" id="contextMenu">
         <div id="menuHighlight">🖍️ Highlight</div>
@@ -355,8 +44,8 @@
 
 <p>From 1949 to 1973, the newly formed New Zealand Wildlife Service made over 60 expeditions to find kākāpō, focusing mainly on Fiordland. Six were caught, but there were no females amongst them and all but one died within a few months of captivity. In 1974, a new initiative was launched, and by 1977, 18 more kākāpō were found in Fiordland. However, there were still no females. In 1977, a large population of males was spotted on Rakiura — a large island free from stoats, ferrets and weasels. There were about 200 individuals, and in 1980 it was confirmed females were also present. These birds have been the foundation of all subsequent work in managing the species.</p>
 
-<p>Unfortunately, predation by feral cats on Rakiura Island led to a rapid decline in kākāpō numbers. As a result, during 1980–97, the surviving population was evacuated to three island sanctuaries: Codfish Island, Maud Island and Little Barrier Island. However, breeding success was hard to
- achieve. Rats were found to be a major predator of kākāpō chicks and an insufficient number of chicks survived to offset adult mortality. By 1995, although at least 12 chicks had been produced on the islands, only three had survived. The kākāpō population had dropped to 51 birds. The critical situation prompted an urgent review of kākāpō management in New Zealand.</p>
+<p>Unfortunately, predation by feral cats on Rakiura Island led to a rapid decline in kākāpō numbers. As a result, during 1980–97, the surviving population was evacuated to three island sanctuaries: Codfish Island, Maud Island and Little Barrier Island. However, breeding success was hard to achieve. Rats were found to be a major predator of kākāpō chicks and an insufficient number of chicks survived to offset adult mortality. By 1995, although at least 12 chicks had been produced on the islands, only three had survived. The kākāpō population had dropped to 51 birds. The critical situation prompted an urgent
+ review of kākāpō management in New Zealand.</p>
 
 <p>In 1996, a new Recovery Plan was launched, together with a specialist advisory group called the Kākāpō Scientific and Technical Advisory Committee and a higher amount of funding. Renewed steps were taken to control predators on the three islands. Cats were eradicated from Little Barrier Island in 1980, and possums were eradicated from Codfish Island by 1986. However, the population did not start to increase until rats were removed from all three islands, and the birds were more intensively managed. This involved moving the birds between islands, supplementary feeding of adults and rescuing and hand-raising any failing chicks. After the first five years of the Recovery Plan, the population was on target. By 2000, five new females had been produced, and the total population had grown to 62 birds. For the first time, there was cautious optimism for the future of kākāpō and by June 2020, a total of 210 birds was recorded.</p>
 
@@ -466,7 +155,6 @@
             </div>
         </div>
     </div>
-    
     <!-- BOTTOM NAVIGATION -->
     <div class="bottom-nav">
         <div style="display:flex; gap:8px; align-items:center; flex-shrink:0;">
@@ -524,7 +212,6 @@
         
         <a href="reading-passage2.html" class="next-passage-btn">Next →</a>
     </div>
-
 <script>
 const STORAGE_KEY = 'Cambridge20_Reading';
 const passageId = 'reading-passage1';
@@ -570,10 +257,10 @@ document.addEventListener('mouseup', () => {
     }
 });
 
-// === HIGHLIGHT SYSTEM — works on both sides ===
+// === HIGHLIGHT & NOTE SYSTEM ===
 let currentRange = null;
 let activeHighlight = null;
-
+let clickedHighlight = null;
 const highlightAreas = ['passageArea', 'questionsArea', 'notesArea'];
 
 function isInHighlightArea(node) {
@@ -587,8 +274,7 @@ function isInHighlightArea(node) {
 function isSelectionValid(sel) {
     if (!sel || sel.isCollapsed || sel.toString().trim() === '') return false;
     try {
-        const range = sel.getRangeAt(0);
-        return isInHighlightArea(range.commonAncestorContainer);
+        return isInHighlightArea(sel.rangeCount > 0 ? sel.getRangeAt(0).commonAncestorContainer : null);
     } catch { return false; }
 }
 
@@ -616,9 +302,12 @@ function restoreNoteMarkers() {
 }
 
 const contextMenu = document.getElementById('contextMenu');
+const noteBox = document.getElementById('noteBox');
+const noteText = document.getElementById('noteText');
+const noteClose = document.getElementById('noteClose');
 
 document.addEventListener('contextmenu', e => {
-    let clickedHighlight = null;
+    clickedHighlight = null;
     let el = e.target;
     while (el) {
         if (el.classList && el.classList.contains('highlight')) {
@@ -627,16 +316,17 @@ document.addEventListener('contextmenu', e => {
         }
         el = el.parentElement;
     }
-    
+
     if (clickedHighlight) {
         activeHighlight = clickedHighlight;
+        currentRange = null;
         contextMenu.style.left = e.pageX + 'px';
         contextMenu.style.top = e.pageY + 'px';
         contextMenu.style.display = 'block';
         e.preventDefault();
         return;
     }
-    
+
     const sel = window.getSelection();
     if (isSelectionValid(sel)) {
         currentRange = sel.getRangeAt(0).cloneRange();
@@ -648,13 +338,12 @@ document.addEventListener('contextmenu', e => {
     } else {
         contextMenu.style.display = 'none';
         activeHighlight = null;
+        currentRange = null;
     }
 });
 
 document.addEventListener('click', e => {
-    if (!contextMenu.contains(e.target)) {
-        contextMenu.style.display = 'none';
-    }
+    if (!contextMenu.contains(e.target)) contextMenu.style.display = 'none';
 });
 
 document.getElementById('menuHighlight').addEventListener('click', () => {
@@ -663,32 +352,33 @@ document.getElementById('menuHighlight').addEventListener('click', () => {
     try {
         const span = document.createElement('span');
         span.className = 'highlight';
+        span.setAttribute('data-note', '');
         currentRange.surroundContents(span);
-        window.getSelection().
-.removeAllRanges();
+        window.getSelection().removeAllRanges();
         saveHighlightsData();
     } catch {
-        alert('⚠️ Please select smaller sections of text.');
+        alert('⚠️ Please select smaller sections to highlight.');
     }
 });
 
 document.getElementById('menuAddNote').addEventListener('click', () => {
     contextMenu.style.display = 'none';
+    if (!activeHighlight && !currentRange) return;
+
     if (!activeHighlight && currentRange) {
         try {
             const span = document.createElement('span');
             span.className = 'highlight';
+            span.setAttribute('data-note', '');
             currentRange.surroundContents(span);
             activeHighlight = span;
             window.getSelection().removeAllRanges();
-            saveHighlightsData();
         } catch {
-            alert('⚠️ Please select smaller sections of text.');
+            alert('⚠️ Please select smaller sections.');
             return;
         }
     }
-    if (!activeHighlight) return;
-    
+
     const rect = activeHighlight.getBoundingClientRect();
     noteBox.style.left = (rect.right + 10) + 'px';
     noteBox.style.top = rect.top + 'px';
@@ -700,21 +390,13 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
 document.getElementById('menuRemove').addEventListener('click', () => {
     contextMenu.style.display = 'none';
     if (!activeHighlight) return;
-    
     const parent = activeHighlight.parentNode;
-    while (activeHighlight.firstChild) {
-        parent.insertBefore(activeHighlight.firstChild, activeHighlight);
-    }
+    while (activeHighlight.firstChild) parent.insertBefore(activeHighlight.firstChild, activeHighlight);
     parent.removeChild(activeHighlight);
     parent.normalize();
-    
     activeHighlight = null;
     saveHighlightsData();
 });
-
-const noteBox = document.getElementById('noteBox');
-const noteText = document.getElementById('noteText');
-const noteClose = document.getElementById('noteClose');
 
 noteClose.addEventListener('click', () => {
     if (activeHighlight) {
@@ -734,39 +416,40 @@ noteClose.addEventListener('click', () => {
     activeHighlight = null;
 });
 
-let isDraggingNote = false, noteOffsetX = 0, noteOffsetY = 0;
+// Drag note box
+let isDraggingNote = false, noteOffX = 0, noteOffY = 0;
 document.getElementById('noteDragHandle').addEventListener('mousedown', e => {
     isDraggingNote = true;
-    const rect = noteBox.getBoundingClientRect();
-    noteOffsetX = e.clientX - rect.left;
-    noteOffsetY = e.clientY - rect.top;
+    const r = noteBox.getBoundingClientRect();
+    noteOffX = e.clientX - r.left;
+    noteOffY = e.clientY - r.top;
 });
 document.addEventListener('mousemove', e => {
     if (!isDraggingNote) return;
-    noteBox.style.left = (e.clientX - noteOffsetX) + 'px';
-    noteBox.style.top = (e.clientY - noteOffsetY) + 'px';
+    noteBox.style.left = (e.clientX - noteOffX) + 'px';
+    noteBox.style.top = (e.clientY - noteOffY) + 'px';
 });
 document.addEventListener('mouseup', () => isDraggingNote = false);
 
-// === QUESTION NAVIGATION & ANSWERS ===
+// === QUESTION NAVIGATION & ANSWER STATUS ===
 let currentQuestionNum = 1;
 
-function setCurrentQuestion(qNum) {
-    document.querySelectorAll('.q-row.current').forEach(r => r.classList.remove('current'));
-    document.querySelectorAll('.q-indicator.current').forEach(b => b.classList.remove('current'));
-    currentQuestionNum = qNum;
-    const row = document.getElementById(`q${qNum}`);
-    const indicator = document.querySelector(`.q-indicator[data-q="${qNum}"]`);
+function setCurrentQuestion(num) {
+    document.querySelectorAll('.q-row').forEach(r => r.classList.remove('current'));
+    document.querySelectorAll('.q-indicator').forEach(b => b.classList.remove('current'));
+    currentQuestionNum = num;
+    const row = document.getElementById(`q${num}`);
+    const indicator = document.querySelector(`.q-indicator[data-q="${num}"]`);
     if (row) row.classList.add('current');
     if (indicator) indicator.classList.add('current');
 }
 
 function updateStatus() {
     for (let q = 1; q <= 40; q++) {
-        const btn = document.querySelector(`.q-indicator[data-q="${q}"]`);
-        if (!btn) continue;
+        const indicator = document.querySelector(`.q-indicator[data-q="${q}"]`);
+        if (!indicator) continue;
         const val = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
-        btn.classList.toggle('answered', val.trim().length > 0);
+        indicator.classList.toggle('answered', val.trim() !== '');
     }
 }
 
@@ -775,7 +458,7 @@ document.querySelectorAll('.q-indicator').forEach(btn => {
         const qNum = parseInt(btn.dataset.q);
         setCurrentQuestion(qNum);
         const target = document.getElementById(`q${qNum}`);
-        if (target) target.scrollIntoView({behavior:'smooth', block:'center'});
+        if (target) target.scrollIntoView({behavior: 'smooth', block: 'center'});
     });
 });
 
@@ -784,9 +467,10 @@ function saveAnswer(q, val) {
     updateStatus();
 }
 
-// Q1–6 TRUE/FALSE/NOT GIVEN — uppercase
+// Q1–6 TRUE/FALSE/NOT GIVEN
 for (let q = 1; q <= 6; q++) {
     const box = document.getElementById(`ans${q}`);
+    if (!box) continue;
     box.addEventListener('input', () => {
         const val = box.value.toUpperCase();
         box.value = val;
@@ -795,50 +479,48 @@ for (let q = 1; q <= 6; q++) {
     });
 }
 
-// Q7–13 Notes Completion — letters/numbers only
+// Q7–13 Notes Completion
 for (let q = 7; q <= 13; q++) {
     const box = document.getElementById(`ans${q}`);
+    if (!box) continue;
     box.addEventListener('input', () => {
-        const val = box.value.trim();
-        box.value = val;
-        box.classList.toggle('filled', val !== '');
+        const val = box.value;
+        box.classList.toggle('filled', val.trim() !== '');
         saveAnswer(q, val);
     });
 }
 
-function clearAllData() {
-    if (!confirm('⚠️ Are you sure you want to clear ALL answers, highlights, and notes? This cannot be undone.')) return;
+// Clear All
+document.getElementById('clearAllBtn').addEventListener('click', () => {
+    if (!confirm('⚠️ Clear ALL answers, highlights, and notes? This cannot be undone.')) return;
     for (let q = 1; q <= 40; q++) localStorage.removeItem(`${STORAGE_KEY}_q${q}`);
     localStorage.removeItem(`${passageId}_highlights`);
     localStorage.removeItem(`${STORAGE_KEY}_split`);
     document.querySelectorAll('input').forEach(i => { i.value = ''; i.classList.remove('filled'); });
     document.querySelectorAll('.highlight').forEach(hl => {
-        const parent = hl.parentNode;
-        while (hl.firstChild) parent.insertBefore(hl.firstChild, hl);
-        parent.removeChild(hl);
-        parent.normalize();
+        const p = hl.parentNode;
+        while (hl.firstChild) p.insertBefore(hl.firstChild, hl);
+        p.removeChild(hl);
+        p.normalize();
     });
     location.reload();
-}
-document.getElementById('clearAllBtn').addEventListener('click', clearAllData);
+});
 
+// Load saved answers
 document.addEventListener('DOMContentLoaded', () => {
-    restoreNoteMarkers();
-    
-    // Load saved answers
     for (let q = 1; q <= 6; q++) {
         const box = document.getElementById(`ans${q}`);
-        const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
+        const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`);
         if (saved) { box.value = saved; box.classList.add('filled'); }
     }
     for (let q = 7; q <= 13; q++) {
         const box = document.getElementById(`ans${q}`);
-        const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
+        const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`);
         if (saved) { box.value = saved; box.classList.add('filled'); }
     }
-    
-    setCurrentQuestion(1);
+    restoreNoteMarkers();
     updateStatus();
+    setCurrentQuestion(1);
 });
 </script>
 </body>
