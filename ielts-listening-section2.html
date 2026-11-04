@@ -1,0 +1,198 @@
+<script>
+const STORAGE_KEY = 'CambridgeXX_TestX_Listening';
+const passageId = 'listening-section2';
+let currentRange = null;
+let activeHighlight = null;
+
+function updateStatus() {
+    // Q11-16: Radio (single answer)
+    for (let q = 11; q <= 16; q++) {
+        const btn = document.querySelector(`.q-indicator[data-q="${q}"]`);
+        if (!btn) continue;
+        const checked = document.querySelector(`input[name="q${q}"]:checked`);
+        btn.classList.toggle('answered', !!checked);
+    }
+    // Q17-20: Checkbox (TWO answers each)
+    for (let q = 17; q <= 20; q++) {
+        const btn = document.querySelector(`.q-indicator[data-q="${q}"]`);
+        if (!btn) continue;
+        const checked = document.querySelectorAll(`input[data-q="${q}"]:checked`).length > 0;
+        btn.classList.toggle('answered', checked);
+    }
+}
+
+function saveAnswer(q, val) {
+    localStorage.setItem(`${STORAGE_KEY}_q${q}`, val);
+    updateStatus();
+}
+
+function saveHighlights() {
+    const highlights = document.querySelectorAll('#passageArea .highlight');
+    const data = Array.from(highlights).map(h => ({
+        outerHTML: h.outerHTML,
+        note: h.getAttribute('data-note') || ''
+    }));
+    localStorage.setItem(`${passageId}_highlights`, JSON.stringify(data));
+}
+
+function isSelectionValid(sel) {
+    if (!sel || sel.isCollapsed || !sel.toString().trim()) return false;
+    try {
+        const r = sel.getRangeAt(0);
+        const p = r.commonAncestorContainer.nodeType === Node.TEXT_NODE
+            ? r.commonAncestorContainer.parentElement : r.commonAncestorContainer;
+        const inArea = document.getElementById('passageArea').contains(p);
+        const inInput = p.closest('input,textarea,button,select,.context-menu,.note-box');
+        return inArea && !inInput;
+    } catch { return false; }
+}
+
+const noteBox = document.getElementById('noteBox');
+const noteText = document.getElementById('noteText');
+const noteClose = document.getElementById('noteClose');
+let isDraggingNote = false, offsetX = 0, offsetY = 0;
+
+noteClose.addEventListener('click', () => { noteBox.style.display = 'none'; activeHighlight = null; });
+noteText.addEventListener('input', () => {
+    if (activeHighlight) {
+        activeHighlight.setAttribute('data-note', noteText.value);
+        saveHighlights();
+    }
+});
+document.addEventListener('mousedown', e => {
+    if (!e.target.closest('.note-header')) return;
+    isDraggingNote = true;
+    const rc = noteBox.getBoundingClientRect();
+    offsetX = e.clientX - rc.left;
+    offsetY = e.clientY - rc.top;
+});
+document.addEventListener('mousemove', e => {
+    if (!isDraggingNote) return;
+    noteBox.style.left = (e.clientX - offsetX) + 'px';
+    noteBox.style.top = (e.clientY - offsetY) + 'px';
+});
+document.addEventListener('mouseup', () => isDraggingNote = false);
+
+const ctxMenu = document.getElementById('contextMenu');
+document.addEventListener('contextmenu', e => {
+    const sel = window.getSelection();
+    const targetHl = e.target.closest('.highlight');
+    ctxMenu.style.display = 'none';
+    if (targetHl) {
+        e.preventDefault();
+        activeHighlight = targetHl;
+        const rc = targetHl.getBoundingClientRect();
+        ctxMenu.style.left = (rc.left + window.scrollX) + 'px';
+        ctxMenu.style.top = (rc.bottom + window.scrollY + 5) + 'px';
+        ctxMenu.style.display = 'block';
+        currentRange = null;
+    } else if (isSelectionValid(sel)) {
+        e.preventDefault();
+        currentRange = sel.getRangeAt(0).cloneRange();
+        const
+const rc = currentRange.getBoundingClientRect();
+        ctxMenu.style.left = (rc.left + window.scrollX) + 'px';
+        ctxMenu.style.top = (rc.bottom + window.scrollY + 5) + 'px';
+        ctxMenu.style.display = 'block';
+        activeHighlight = null;
+    }
+});
+
+document.addEventListener('click', e => {
+    if (!ctxMenu.contains(e.target)) ctxMenu.style.display = 'none';
+});
+
+document.getElementById('menuHighlight').addEventListener('click', () => {
+    if (!currentRange) return;
+    try {
+        const sp = document.createElement('span');
+        sp.className = 'highlight';
+        sp.textContent = currentRange.toString();
+        currentRange.deleteContents();
+        currentRange.insertNode(sp);
+        window.getSelection().removeAllRanges();
+        saveHighlights();
+    } catch { alert('⚠️ Select smaller text please.'); }
+    ctxMenu.style.display = 'none';
+});
+
+document.getElementById('menuAddNote').addEventListener('click', () => {
+    ctxMenu.style.display = 'none';
+    if (!activeHighlight) {
+        if (!currentRange) return;
+        try {
+            const sp = document.createElement('span');
+            sp.className = 'highlight';
+            sp.textContent = currentRange.toString();
+            currentRange.deleteContents();
+            currentRange.insertNode(sp);
+            activeHighlight = sp;
+            window.getSelection().removeAllRanges();
+            saveHighlights();
+        } catch { alert('⚠️ Select smaller text please.'); return; }
+    }
+    if (!activeHighlight.querySelector('.note-marker')) {
+        const m = document.createElement('span');
+        m.className = 'note-marker';
+        m.textContent = '!';
+        activeHighlight.appendChild(m);
+    }
+    const rc = activeHighlight.getBoundingClientRect();
+    noteBox.style.left = (rc.right + window.scrollX + 10) + 'px';
+    noteBox.style.top = (rc.top + window.scrollY) + 'px';
+    noteBox.style.display = 'block';
+    noteText.value = activeHighlight.getAttribute('data-note') || '';
+    noteText.focus();
+});
+
+document.getElementById('menuRemove').addEventListener('click', () => {
+    ctxMenu.style.display = 'none';
+    noteBox.style.display = 'none';
+    if (!activeHighlight) return;
+    activeHighlight.parentNode.replaceChild(
+        document.createTextNode(activeHighlight.textContent),
+        activeHighlight
+    );
+    activeHighlight.parentNode.normalize();
+    activeHighlight = null;
+    saveHighlights();
+});
+
+function clearAll() {
+    if (!confirm('⚠️ Clear all answers and highlights? This cannot be undone.')) return;
+    for (let q = 11; q <= 20; q++) localStorage.removeItem(`${STORAGE_KEY}_q${q}`);
+    localStorage.removeItem(`${passageId}_highlights`);
+    document.querySelectorAll('input[type=radio], input[type=checkbox]').forEach(i => i.checked = false);
+    document.querySelectorAll('.highlight').forEach(h => {
+        h.parentNode.replaceChild(document.createTextNode(h.textContent), h);
+        h.parentNode.normalize();
+    });
+    noteBox.style.display = 'none';
+    updateStatus();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Restore radio answers Q11-16
+    for (let q = 11; q <= 16; q++) {
+        const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
+        document.querySelectorAll(`input[name="q${q}"]`).forEach(inp => {
+            inp.checked = (inp.value === saved);
+            inp.addEventListener('change', () => saveAnswer(q, inp.value));
+        });
+    }
+    // Restore checkbox answers Q17-20
+    for (let q = 17; q <= 20; q++) {
+        const saved = (localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '').split(',');
+        document.querySelectorAll(`input[data-q="${q}"]`).forEach(inp => {
+            inp.checked = saved.includes(inp.value);
+            inp.addEventListener('change', () => {
+                const allChecked = Array.from(document.querySelectorAll(`input[data-q="${q}"]:checked`)).map(c => c.value);
+                saveAnswer(q, allChecked.join(','));
+            });
+        });
+    }
+    updateStatus();
+});
+</script>
+</body>
+</html>
