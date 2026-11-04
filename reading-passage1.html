@@ -665,3 +665,181 @@ document.getElementById('menuHighlight').addEventListener('click', () => {
         span.className = 'highlight';
         currentRange.surroundContents(span);
         window.getSelection().
+.removeAllRanges();
+        saveHighlightsData();
+    } catch {
+        alert('⚠️ Please select smaller sections of text.');
+    }
+});
+
+document.getElementById('menuAddNote').addEventListener('click', () => {
+    contextMenu.style.display = 'none';
+    if (!activeHighlight && currentRange) {
+        try {
+            const span = document.createElement('span');
+            span.className = 'highlight';
+            currentRange.surroundContents(span);
+            activeHighlight = span;
+            window.getSelection().removeAllRanges();
+            saveHighlightsData();
+        } catch {
+            alert('⚠️ Please select smaller sections of text.');
+            return;
+        }
+    }
+    if (!activeHighlight) return;
+    
+    const rect = activeHighlight.getBoundingClientRect();
+    noteBox.style.left = (rect.right + 10) + 'px';
+    noteBox.style.top = rect.top + 'px';
+    noteBox.style.display = 'block';
+    noteText.value = activeHighlight.getAttribute('data-note') || '';
+    noteText.focus();
+});
+
+document.getElementById('menuRemove').addEventListener('click', () => {
+    contextMenu.style.display = 'none';
+    if (!activeHighlight) return;
+    
+    const parent = activeHighlight.parentNode;
+    while (activeHighlight.firstChild) {
+        parent.insertBefore(activeHighlight.firstChild, activeHighlight);
+    }
+    parent.removeChild(activeHighlight);
+    parent.normalize();
+    
+    activeHighlight = null;
+    saveHighlightsData();
+});
+
+const noteBox = document.getElementById('noteBox');
+const noteText = document.getElementById('noteText');
+const noteClose = document.getElementById('noteClose');
+
+noteClose.addEventListener('click', () => {
+    if (activeHighlight) {
+        activeHighlight.setAttribute('data-note', noteText.value);
+        if (noteText.value && !activeHighlight.querySelector('.note-marker')) {
+            const marker = document.createElement('span');
+            marker.className = 'note-marker';
+            marker.textContent = '!';
+            activeHighlight.appendChild(marker);
+        }
+        if (!noteText.value && activeHighlight.querySelector('.note-marker')) {
+            activeHighlight.querySelector('.note-marker').remove();
+        }
+        saveHighlightsData();
+    }
+    noteBox.style.display = 'none';
+    activeHighlight = null;
+});
+
+let isDraggingNote = false, noteOffsetX = 0, noteOffsetY = 0;
+document.getElementById('noteDragHandle').addEventListener('mousedown', e => {
+    isDraggingNote = true;
+    const rect = noteBox.getBoundingClientRect();
+    noteOffsetX = e.clientX - rect.left;
+    noteOffsetY = e.clientY - rect.top;
+});
+document.addEventListener('mousemove', e => {
+    if (!isDraggingNote) return;
+    noteBox.style.left = (e.clientX - noteOffsetX) + 'px';
+    noteBox.style.top = (e.clientY - noteOffsetY) + 'px';
+});
+document.addEventListener('mouseup', () => isDraggingNote = false);
+
+// === QUESTION NAVIGATION & ANSWERS ===
+let currentQuestionNum = 1;
+
+function setCurrentQuestion(qNum) {
+    document.querySelectorAll('.q-row.current').forEach(r => r.classList.remove('current'));
+    document.querySelectorAll('.q-indicator.current').forEach(b => b.classList.remove('current'));
+    currentQuestionNum = qNum;
+    const row = document.getElementById(`q${qNum}`);
+    const indicator = document.querySelector(`.q-indicator[data-q="${qNum}"]`);
+    if (row) row.classList.add('current');
+    if (indicator) indicator.classList.add('current');
+}
+
+function updateStatus() {
+    for (let q = 1; q <= 40; q++) {
+        const btn = document.querySelector(`.q-indicator[data-q="${q}"]`);
+        if (!btn) continue;
+        const val = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
+        btn.classList.toggle('answered', val.trim().length > 0);
+    }
+}
+
+document.querySelectorAll('.q-indicator').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const qNum = parseInt(btn.dataset.q);
+        setCurrentQuestion(qNum);
+        const target = document.getElementById(`q${qNum}`);
+        if (target) target.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+});
+
+function saveAnswer(q, val) {
+    localStorage.setItem(`${STORAGE_KEY}_q${q}`, val.trim());
+    updateStatus();
+}
+
+// Q1–6 TRUE/FALSE/NOT GIVEN — uppercase
+for (let q = 1; q <= 6; q++) {
+    const box = document.getElementById(`ans${q}`);
+    box.addEventListener('input', () => {
+        const val = box.value.toUpperCase();
+        box.value = val;
+        box.classList.toggle('filled', val.trim() !== '');
+        saveAnswer(q, val);
+    });
+}
+
+// Q7–13 Notes Completion — letters/numbers only
+for (let q = 7; q <= 13; q++) {
+    const box = document.getElementById(`ans${q}`);
+    box.addEventListener('input', () => {
+        const val = box.value.trim();
+        box.value = val;
+        box.classList.toggle('filled', val !== '');
+        saveAnswer(q, val);
+    });
+}
+
+function clearAllData() {
+    if (!confirm('⚠️ Are you sure you want to clear ALL answers, highlights, and notes? This cannot be undone.')) return;
+    for (let q = 1; q <= 40; q++) localStorage.removeItem(`${STORAGE_KEY}_q${q}`);
+    localStorage.removeItem(`${passageId}_highlights`);
+    localStorage.removeItem(`${STORAGE_KEY}_split`);
+    document.querySelectorAll('input').forEach(i => { i.value = ''; i.classList.remove('filled'); });
+    document.querySelectorAll('.highlight').forEach(hl => {
+        const parent = hl.parentNode;
+        while (hl.firstChild) parent.insertBefore(hl.firstChild, hl);
+        parent.removeChild(hl);
+        parent.normalize();
+    });
+    location.reload();
+}
+document.getElementById('clearAllBtn').addEventListener('click', clearAllData);
+
+document.addEventListener('DOMContentLoaded', () => {
+    restoreNoteMarkers();
+    
+    // Load saved answers
+    for (let q = 1; q <= 6; q++) {
+        const box = document.getElementById(`ans${q}`);
+        const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
+        if (saved) { box.value = saved; box.classList.add('filled'); }
+    }
+    for (let q = 7; q <= 13; q++) {
+        const box = document.getElementById(`ans${q}`);
+        const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
+        if (saved) { box.value = saved; box.classList.add('filled'); }
+    }
+    
+    setCurrentQuestion(1);
+    updateStatus();
+});
+</script>
+</body>
+</html>
