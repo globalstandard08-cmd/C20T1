@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Answers — Cambridge 19 Test 4</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #f4f6f9; padding: 20px; line-height: 1.7; }
+        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); padding: 30px; }
+        h1 { color: #1f3a5f; margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        h2 { color: #1f3a5f; margin: 30px 0 15px; font-size: 20px; border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+        h3 { margin: 15px 0 8px; font-size: 16px; color: #444; }
+        .answer-row { display: flex; padding: 10px 12px; border-bottom: 1px solid #eee; align-items: center; }
+        .q-num { width: 50px; font-weight: bold; color: #1f3a5f; flex-shrink: 0; }
+        .user-ans { flex: 1; padding: 8px 12px; background: #e6f0ff; border-radius: 4px; }
+        .empty { color: #999; font-style: italic; }
+        .writing-box { padding: 15px; background: #f9f9f9; border-radius: 6px; margin: 10px 0; white-space: pre-wrap; min-height: 120px; border: 1px solid #e0e0e0; }
+        .nav { margin-top: 30px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        .btn { padding: 10px 18px; border-radius: 4px; text-decoration: none; font-weight: bold; border: none; cursor: pointer; font-size: 15px; }
+        .back { background: #6b7280; color: white; }
+        .print { background: #1f3a5f; color: white; }
+        .download { background: #10b981; color: white; }
+        .clear { background: #dc2626; color: white; }
+        .clear:hover { background: #b91c1c; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📋 Your Answers — Cambridge 19 Test 4</h1>
+        <!-- LISTENING -->
+        <h2>🎧 Listening</h2>
+        <h3>Part 1 — Questions 1–10</h3>
+        <div id="listening-p1"></div>
+        <h3>Part 2 — Questions 11–20</h3>
+        <div id="listening-p2"></div>
+        <h3>Part 3 — Questions 21–30</h3>
+        <div id="listening-p3"></div>
+        <h3>Part 4 — Questions 31–40</h3>
+        <div id="listening-p4"></div>
+        <!-- READING -->
+        <h2>📖 Reading</h2>
+        <h3>Passage 1 — Questions 1–13</h3>
+        <div id="reading-p1"></div>
+        <h3>Passage 2 — Questions 14–26</h3>
+        <div id="reading-p2"></div>
+        <h3>Passage 3 — Questions 27–40</h3>
+        <div id="reading-p3"></div>
+        <!-- WRITING -->
+        <h2>✍️ Writing</h2>
+        <h3>Task 1</h3>
+        <div id="writing-task1" class="writing-box"></div>
+        <h3>Task 2</h3>
+        <div id="writing-task2" class="writing-box"></div>
+        <div class="nav">
+            <a href="index.html" class="btn back">← Back to Home</a>
+            <a href="writing-task2.html" class="btn back">← Back to Task 2</a>
+            <button class="btn download" onclick="downloadAnswers()">⬇️ Download (.txt)</button>
+            <button class="btn clear" onclick="clearAllData()">🗑️ Clear All Answers</button>
+            <a href="#" class="btn print" onclick="window.print()">🖨️ Print / Save as PDF</a>
+        </div>
+    </div>
+<script>
+// ✅ ALL KEYS UPDATED → Cambridge 19 Test 4
+const STORAGE_LISTENING = 'Cambridge19_Test4_Listening';
+const STORAGE_READING = 'Cambridge19_Test4_Reading';
+const STORAGE_WRITING = 'Cambridge19_Test4_Writing';
+
+// Exact keys matching writing-task1.html & writing-task2.html
+const STORAGE_WRITING_T1 = STORAGE_WRITING + '_writingTask1';
+const STORAGE_WRITING_T2 = STORAGE_WRITING + '_writingTask2';
+
+// Clear all keys for this test
+const ALL_KEYS = Object.keys(localStorage);
+const REL_KEYS = ALL_KEYS.filter(k => k.includes('Cambridge19_Test4'));
+
+function getAnswer(prefix, qNum) {
+    const key = `${prefix}_q${qNum}`;
+    const val = localStorage.getItem(key);
+    return val ? val.trim() : '';
+}
+function makeRow(qNum, answer) {
+    const display = answer || '<span class="empty">— No answer provided —</span>';
+    return `<div class="answer-row"><span class="q-num">${qNum}</span><span class="user-ans"><strong>Your Answer:</strong> ${display}</span></div>`;
+}
+function renderSection(containerId, prefix, startQ, endQ) {
+    const container = document.getElementById(containerId);
+    let html = '';
+    for (let q = startQ; q <= endQ; q++) {
+        html += makeRow(q, getAnswer(prefix, q));
+    }
+    container.innerHTML = html;
+}
+function renderWritingBox(containerId, storageKey) {
+    const container = document.getElementById(containerId);
+    const content = localStorage.getItem(storageKey);
+    container.innerHTML = content?.trim() ? content : '<span class="empty">— No response submitted —</span>';
+}
+function downloadAnswers() {
+    let text = 'YOUR ANSWERS — Cambridge 19 Test 4\nGenerated: ' + new Date().toLocaleString() + '\n' + '='.repeat(50) + '\n\n';
+    text += '🎧 LISTENING\n' + '-'.repeat(30) + '\n';
+    for (let q = 1; q <= 40; q++) text += `Q${String(q).padStart(2,' ')}: ${getAnswer(STORAGE_LISTENING, q) || '— No answer —'}\n`;
+    text += '\n📖 READING\n' + '-'.repeat(30) + '\n';
+    for (let q = 1; q <= 40; q++) text += `Q${String(q).padStart(2,' ')}: ${getAnswer(STORAGE_READING, q) || '— No answer —'}\n`;
+    text += '\n✍️ WRITING\n' + '-'.repeat(30) + '\nTask 1:\n' + 
+        (localStorage.getItem(STORAGE_WRITING_T1) || '— No response —') + 
+        '\n\nTask 2:\n' + 
+        (localStorage.getItem(STORAGE_WRITING_T2) || '— No response —') + '\n';
+    
+    const blob = new Blob([text], {type:'text/plain;charset=utf-8'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'Cambridge19_Test4_Your_Answers.txt';
+    document.body.appendChild(a); a.click();
+    document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+function clearAllData() {
+    if (!confirm('⚠️ Clear ALL answers, writing, and highlights for Test 4?\nThis cannot be undone.')) return;
+    REL_KEYS.forEach(k => localStorage.removeItem(k));
+    alert('✅ All answers cleared.');
+    location.reload();
+}
+document.addEventListener('DOMContentLoaded', () => {
+    renderSection('listening-p1', STORAGE_LISTENING, 1, 10);
+    renderSection('listening-p2', STORAGE_LISTENING, 11, 20);
+    renderSection('listening-p3', STORAGE_LISTENING, 21, 30);
+    renderSection('listening-p4', STORAGE_LISTENING, 31, 40);
+    
+    renderSection('reading-p1', STORAGE_READING, 1, 13);
+    renderSection('reading-p2', STORAGE_READING, 14, 26);
+    renderSection('reading-p3', STORAGE_READING, 27, 40);
+    
+    renderWritingBox('writing-task1', STORAGE_WRITING_T1);
+    renderWritingBox('writing-task2', STORAGE_WRITING_T2);
+});
+</script>
+</body>
+</html>
