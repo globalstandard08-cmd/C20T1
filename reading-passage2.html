@@ -21,7 +21,11 @@
         }
         .logo { height: 55px; width: auto; }
         
-        .main-grid { display: flex; min-height: calc(100vh - 75px - 48px); }
+        .main-grid { 
+            display: flex; 
+            min-height: calc(100vh - 75px - 48px);
+            gap: 0;
+        }
         
         .passage-pane { 
             width: calc(50% - 6px); 
@@ -53,8 +57,13 @@
         }
         .passage-text { font-size: 16px; line-height: 1.7; }
         .passage-text p { margin-bottom: 14px; text-align: justify; }
-        .para-label { font-weight: bold; color: #1f3a5f; display: inline-block; min-width: 24px; }
-        .section-letter { font-weight: bold; color: #1f3a5f; display: inline-block; min-width: 24px; }
+        .section-letter { 
+            font-weight: bold; 
+            color: #1f3a5f; 
+            display: inline-block; 
+            min-width: 24px;
+            vertical-align: top;
+        }
         
         .divider {
             width: 12px;
@@ -87,561 +96,232 @@
             position: sticky; 
             top: 75px; 
         }
-        .questions-block { margin-bottom: 35px; }
-        .questions-block h3 { color: #1f3a5f; margin-bottom: 10px; font-size: 18px; }
-        .q-row { display: flex; align-items: flex-start; gap: 10px; margin: 14px 0; font-size: 16px; flex-wrap: wrap; }
+        .questions-block { 
+            margin-bottom: 35px; 
+            padding-bottom: 10px;
+        }
+        .questions-block h3 { 
+            color: #1f3a5f; 
+            margin-bottom: 12px; 
+            font-size: 18px;
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 6px;
+        }
+        .q-row { 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 12px; 
+            margin: 14px 0; 
+            font-size: 16px; 
+            flex-wrap: nowrap;
+        }
         .q-row.current { 
             background-color: #eaf1fa; 
-            padding: 10px 8px; 
+            padding: 10px 12px; 
             border-radius: 4px;
-            margin-left: -8px;
-            margin-right: -8px;
+            margin-left: -12px;
+            margin-right: -12px;
         }
-        .q-num { font-weight: bold; min-width: 28px; color: #1f3a5f; flex-shrink: 0; }
+        .q-num { 
+            font-weight: bold; 
+            min-width: 32px; 
+            color: #1f3a5f; 
+            flex-shrink: 0;
+            padding-top: 2px;
+        }
         .ans-box {
-            width: 60px; height: 36px; border: 1px solid #333; border-radius: 2px;
-            padding: 0 8px; font-weight: bold; font-size: 15px; text-transform: uppercase;
-            background: #fff; outline: none; text-align: center;
+            width: 44px; 
+            height: 38px; 
+            border: 1px solid #333; 
+            border-radius: 2px;
+            padding: 0 4px; 
+            font-weight: bold; 
+            font-size: 15px; 
+            text-transform: uppercase;
+            background: #fff; 
+            outline: none; 
+            text-align: center;
+            flex-shrink: 0;
         }
         .ans-box.filled { background: #f5f8ff; border-color: #1f3a5f; }
         .input-answer {
-            width: 220px; padding: 7px 10px; border: 1px solid #ddd; border-radius: 4px;
-            font-size: 16px; background: #fff;
+            flex: 1; 
+            min-width: 150px;
+            padding: 8px 12px; 
+            border: 1px solid #ddd; 
+            border-radius: 4px;
+            font-size: 16px; 
+            background: #fff;
         }
         .input-answer:focus { outline: none; border-color: #1f3a5f; }
         .input-answer.filled { background-color: #f5f8ff; border-color: #1f3a5f; }
-        .match-table { border-collapse: collapse; margin: 15px 0; width: 100%; max-width: 400px; }
-        .match-table th, .match-table td { border: 1px solid #ccc; padding: 8px; text-align: center; font-size: 14px; }
-        .match-table td input { width: 40px; text-align: center; border: 1px solid #999; border-radius: 3px; padding: 2px; }
+        
+        .match-table { 
+            border-collapse: collapse; 
+            margin: 15px 0; 
+            width: 100%;
+            table-layout: fixed;
+        }
+        .match-table th, .match-table td { 
+            border: 1px solid #ccc; 
+            padding: 8px 4px; 
+            text-align: center; 
+            font-size: 14px; 
+            vertical-align: middle;
+        }
+        .match-table td:first-child { 
+            text-align: left; 
+            padding-left: 10px; 
+            width: 70%;
+        }
+        .match-table th { background-color: #f9f9f9; font-weight: bold; color: #1f3a5f; }
+        .match-table td input { 
+            width: 36px; 
+            height: 32px;
+            text-align: center; 
+            border: 1px solid #999; 
+            border-radius: 3px; 
+            padding: 2px;
+            font-size: 14px;
+        }
         
         .highlight { 
-            background-color: #ffd700; padding: 1px 3px; border-radius: 2px; 
-            cursor: pointer; display: inline; color: #000; position: relative; 
+            background-color: #ffd700; 
+            padding: 1px 3px; 
+            border-radius: 2px; 
+            cursor: pointer; 
+            display: inline; 
+            color: #000; 
+            position: relative; 
         }
         .note-marker { 
-            position: absolute; top: -8px; right: -8px; width: 18px; height: 18px; 
-            background: #1f3a5f; color: white; border-radius: 50%; font-size: 11px; 
-            display: flex; align-items: center; justify-content: center; z-index: 10; 
+            position: absolute; 
+            top: -8px; 
+            right: -8px; 
+            width: 18px; 
+            height: 18px; 
+            background: #1f3a5f; 
+            color: white; 
+            border-radius: 50%; 
+            font-size: 11px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 10; 
         }
         .context-menu { 
-            position: absolute; background: #fff; border: 1px solid #ddd; 
-            box-shadow: 0 2px 12px rgba(0,0,0,0.1); z-index: 9999; display: none; min-width: 180px; 
+            position: absolute; 
+            background: #fff; 
+            border: 1px solid #ddd; 
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1); 
+            z-index: 9999; 
+            display: none; 
+            min-width: 180px; 
         }
-        .context-menu div { padding: 10px 14px; cursor: pointer; font-size: 14px; border-bottom: 1px solid #f5f5f5; }
+        .context-menu div { 
+            padding: 10px 14px; 
+            cursor: pointer; 
+            font-size: 14px; 
+            border-bottom: 1px solid #f5f5f5; 
+        }
         .context-menu div:last-child { border-bottom: none; }
         .context-menu div:hover { background: #f5f5f5; }
         
         .note-box { 
-            position: absolute; width: 260px; min-height: 80px; 
-            background: #fffde7; border: 1px solid #f9d423; border-radius: 6px; 
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1); z-index: 9990; display: none; 
+            position: absolute; 
+            width: 260px; 
+            min-height: 80px; 
+            background: #fffde7; 
+            border: 1px solid #f9d423; 
+            border-radius: 6px; 
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1); 
+            z-index: 9990; 
+            display: none; 
         }
         .note-header { 
-            background: #f9d423; padding: 6px 10px; cursor: move; 
-            display: flex; justify-content: space-between; align-items: center; font-weight: bold; 
+            background: #f9d423; 
+            padding: 6px 10px; 
+            cursor: move; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            font-weight: bold; 
         }
         .note-close { cursor: pointer; font-size: 16px; }
         .note-textarea { 
-            width: 100%; min-height: 60px; border: none; padding: 10px; 
-            font-size: 14px; resize: vertical; background: transparent; outline: none; 
+            width: 100%; 
+            min-height: 60px; 
+            border: none; 
+            padding: 10px; 
+            font-size: 14px; 
+            resize: vertical; 
+            background: transparent; 
+            outline: none; 
         }
         
         .bottom-nav { 
-            min-height: 48px; border-top: 1px solid #eee; display: flex; 
-            align-items: center; justify-content: space-between; padding: 8px 15px; 
-            position: sticky; bottom: 0; background: #fff; z-index: 90; 
-            flex-wrap: wrap; gap: 8px;
+            min-height: 48px; 
+            border-top: 1px solid #eee; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 8px 15px; 
+            position: sticky; 
+            bottom: 0; 
+            background: #fff; 
+            z-index: 90; 
+            flex-wrap: wrap; 
+            gap: 10px;
         }
-        .nav-group { display: flex; align-items: center; gap: 3px; flex-wrap: wrap; }
-        .part-label { font-size: 10px; color: #1f3a5f; margin: 0 4px; }
+        .nav-group { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+        .part-label { font-size: 11px; color: #1f3a5f; margin: 0 6px; font-weight: 500; }
         .q-indicator {
-            width: 26px; height: 26px; border: 1px solid #ddd; background: #fff;
-            text-align: center; line-height: 24px; font-size: 11px; cursor: pointer; border-radius: 3px;
+            width: 28px; 
+            height: 28px; 
+            border: 1px solid #ddd; 
+            background: #fff;
+            text-align: center; 
+            line-height: 26px; 
+            font-size: 12px; 
+            cursor: pointer; 
+            border-radius: 3px;
+            transition: all 0.15s ease;
         }
-        .q-indicator.current { background: #eaf1fa; border-color: #1f3a5f; border-width: 2px; font-weight: bold; }
-        .q-indicator.answered { background: #10b981; color: #fff; border-color: #10b981; }
+        .q-indicator.current { 
+            background: #eaf1fa; 
+            border-color: #1f3a5f; 
+            border-width: 2px; 
+            font-weight: bold; 
+        }
+        .q-indicator.answered { 
+            background: #10b981; 
+            color: #fff; 
+            border-color: #10b981; 
+        }
         .back-btn, .next-passage-btn, .clear-btn {
-            padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;
-            font-size: 14px; font-weight: bold; text-decoration: none;
+            padding: 9px 18px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer;
+            font-size: 14px; 
+            font-weight: bold; 
+            text-decoration: none;
+            transition: opacity 0.2s ease;
         }
         .back-btn { background: #6b7280; color: #fff; }
         .next-passage-btn { background: #10b981; color: #fff; }
         .clear-btn { background: #ef4444; color: #fff; margin-left: 8px; }
+        button:hover, a:hover { opacity: 0.9; }
+        .summary-box {
+            border: 1px solid #ccc; 
+            padding: 18px; 
+            border-radius: 4px; 
+            margin: 15px 0;
+            background: #fcfcfc;
+        }
+        .summary-box p { margin: 10px 0; line-height: 1.6; }
+        .summary-box p:first-child { margin-top: 0; font-weight: bold; }
     </style>
 </head>
 <body>
-    <div class="context-menu" id="contextMenu">
-        <div id="menuHighlight">🖍️ Highlight</div>
-        <div id="menuAddNote">📝 Add Note</div>
-        <div id="menuRemove">❌ Remove Highlight</div>
-    </div>
-    
-    <div class="note-box" id="noteBox">
-        <div class="note-header" id="noteDragHandle">
-            <span>📝 Note</span>
-            <span class="note-close" id="noteClose">×</span>
-        </div>
-        <textarea class="note-textarea" id="noteText" placeholder="Type your note here…"></textarea>
-    </div>
-    
-    <div class="top-bar">
-        <img src="ielts-logo.png" alt="IELTS Logo" class="logo">
-    </div>
-    
-    <div class="main-grid" id="mainGrid">
-        <div class="passage-pane" id="passagePane">
-            <div class="exam-title">READING PASSAGE 2</div>
-            <div class="instruction">You should spend about 20 minutes on Questions 14–26, which are based on Reading Passage 2 below.</div>
-            <h2 style="text-align:center; margin:20px 0; color:#1f3a5f;">to Britain</h2>
-            
-            <div class="passage-text" id="passageArea">
-                <p><span class="section-letter">A</span>round 25 million elms, accounting for 90% of all elm trees in the UK, died during the 1960s and 70s of Dutch elm disease. In the aftermath, the elm, once so dominant in the British landscape, was largely forgotten. However, there's now hope the elm may be reintroduced to the countryside of central and southern England. Any reintroduction will start from a very low base. The impact of the disease is difficult to picture if you hadn't seen what was there before,' says Matt Elliot of the Woodland Trust. 'You look at old photographs from the 1900s and it's only then that you realise the impact [elms had] ... They were significant, large trees ... then they were gone.'</p>
-                
-                <p><span class="section-letter">B</span>The disease is caused by a fungus that blocks the elm's vascular (water, nutrient and food transport) system, causing branches to wilt and die. A first epidemic, which occurred in the 1920s, gradually died down, but in the 70s a second epidemic was triggered by shipments of elm from Canada. The wood came in the form of logs destined for boat building and its intact bark was perfect for the elm bark beetles that spread the deadly fungus. This time, the beetles carried a much more virulent strain that destroyed the vast majority of British elms.</p>
-                
-                <p><span class="section-letter">C</span>Today, elms still exist in the southern English countryside but mostly only in low hedgerows between fields. 'We have millions of small elms in hedgerows but they get targeted by the beetle as soon as they reach a certain size,' says Karen Russell, co-author of the report 'Where are we with elm?'. One of the trunks of the elm reaches 10–15 centimetres or so in diameter, it becomes a perfect size for beetles to lay eggs and for the fungus to take hold. Yet mature specimens have been identified, in counties such as Cambridgeshire, that are hundreds of years old, and have mysteriously escaped the epidemic.</p>
-                <p>The key, Russell says, is to identify and study those trees that have survived and work out why they stood tall when millions of others succumbed. Nevertheless, opportunities are limited as the number of these mature survivors is relatively small. 'What are the reasons for their survival?' asks Russell. 'Avoidance, tolerance, resistance? We don't know where the balance lies between the three. I don't see how it can be entirely down to luck.'</p>
-                
-                <p><span class="section-letter">D</span>For centuries, elm can in many cases second only to oak as the hardwood tree of choice in Britain and was in many instances the most prominent tree in the landscape. Not only was elm common in European forests, it became a key component of birch, ash and hazel woodlands. The use of elm is thought to go back to the Bronze Age, when it was widely used for tools. Elm was also the preferred material for shields and early swords. In the 18th century, it was planted more widely and its wood was used for items such as storage crates and flooring. It was also suitable for items that experienced high levels of impact and was used to build the keel of the 19th-century sailing ship Cutty Sark as well as mining equipment.</p>
-                
-                <p><span class="section-letter">E</span>Given how ingrained elm is in British culture, it's unsurprising the tree has many advocates. Amongst them is Peter Bourne of the National Elm Collection in Brighton. 'I saw Dutch elm disease unfold as a small boy,' he says. 'The elm seemed to be part of the landscape, but I remember watching trees just lose their leaves and that really stayed with me.' Today, the city of Brighton's elms total about 17,000. Local factors appear to have contributed to their survival. Strong winds from the sea make it difficult for the determined elm bark beetle to attack this coastal city's elm population. However, the situation is precarious. 'The beetles can just march in if we're not careful, as the threat is right on our doorstep,' says Bourne.</p>
-                
-                <p><span class="section-letter">F</span>Any prospect of the elm returning relies heavily on trees being either resistant to, or tolerant of, the disease. This means a widespread reintroduction would involve existing or new hybrid strains derived from resistant, generally non-native elm species. A new generation of seedlings have been bred and tested to see if they can withstand the fungus by cutting a small slit on the bark and injecting a tiny amount of the pathogen. 'The effects are very quick,' says Russell. 'You return in four to six weeks and trees that are resistant show no symptoms, whereas those that are susceptible show leaf loss and may even have died completely.'</p>
-                
-                <p><span class="section-letter">G</span>All of this raises questions of social acceptance, acknowledges Russell. 'If we're putting elm back into the landscape, a small element of it is not native — are we bothered about that?' For her, the environmental case for reintroducing elm is strong. 'They will host wildlife, which is a good thing.' Others are more wary. 'On the face of it, it seems like a good idea,' says Elliot. The problem, he suggests, is that, 'You're replacing a native species with a horticultural analogue*. You're effectively cloning.' There's also the risk of introducing new diseases. Rather than plant new elms, the Woodland Trust emphasises providing space to those elms that have survived independently. 'Sometimes the best thing you can do is just give nature time to recover ... over time, you might get resistance,' says Elliot.</p>
-                
-                <p style="font-size:13px; margin-top:10px; color:#555;">*horticultural analogue: a cultivated plant species that is genetically similar to an existing species</p>
-            </div>
-        </div>
-            <div class="questions-block">
-                <h3>Questions 14–18</h3>
-                <p style="margin-bottom:12px;"><em>Reading Passage 2 has seven sections, A–G. Which section contains the following information?</em><br>
-                <em>NB You may use any letter more than once.</em></p>
-                
-                <table class="match-table">
-                    <tr>
-                        <th></th>
-                        <th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th>
-                    </tr>
-                    <tr>
-                        <td>14. reference to the research problems that arise from there being only a few surviving large elms</td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                    </tr>
-                    <tr>
-                        <td>15. details of a difference of opinion about the value of reintroducing elms to Britain</td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                    </tr>
-                    <tr>
-                        <td>16. reference to how Dutch elm disease was brought into Britain</td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                    </tr>
-                    <tr>
-                        <td>17. a description of the conditions that have enabled a location in Britain to escape Dutch elm disease</td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                    </tr>
-                    <tr>
-                        <td>18. reference to the stage at which young elms become vulnerable to Dutch elm disease</td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="questions-block">
-                <h3>Questions 19–23</h3>
-                <p style="margin-bottom:12px;"><em>Look at the following statements (Questions 19–23) and the list of people below.</em><br>
-                <em>Match each statement with the correct person, A, B or C.</em><br>
-                <em>NB You may use any letter more than once.</em></p>
-                
-                <p style="margin:15px 0 8px;"><strong>List of People</strong><br>
-                A &nbsp; Matt Elliot<br>
-                B &nbsp; Karen Russell<br>
-                C &nbsp; Peter Bourne</p>
-                
-                <div class="q-row" id="q19">
-                    <span class="q-num">19.</span>
-                    <span>If a tree gets infected with Dutch elm disease, the damage rapidly becomes visible.</span>
-                    <input type="text" class="ans-box" id="ans19" maxlength="1">
-                </div>
-                <div class="q-row" id="q20">
-                    <span class="q-num">20.</span>
-                    <span>It may be better to wait and see if the mature elms that have survived continue to flourish.</span>
-                    <input type="text" class="ans-box" id="ans20" maxlength="1">
-                </div>
-                <div class="q-row" id="q21">
-                    <span class="q-num">21.</span>
-                    <span>There must be an explanation for the survival of some mature elms.</span>
-                    <input type="text" class="ans-box" id="ans21" maxlength="1">
-                </div>
-                <div class="q-row" id="q22">
-                    <span class="q-num">22.</span>
-                    <span>We need to be aware that insects carrying Dutch elm disease are not very far away.</span>
-                    <input type="text" class="ans-box" id="ans22" maxlength="1">
-                </div>
-                <div class="q-row" id="q23">
-                    <span class="q-num">23.</span>
-                    <span>You understand the effect Dutch elm disease has had when you see evidence of how prominent the tree once was.</span>
-                    <input type="text" class="ans-box" id="ans23" maxlength="1">
-                </div>
-            </div>
-
-            <div class="questions-block">
-                <h3>Questions 24–26</h3>
-                <p style="margin-bottom:12px;"><em>Complete the summary below.</em><br>
-                <em>Choose ONE WORD ONLY from the passage for each answer.</em></p>
-                
-                <div style="border:1px solid #ccc; padding:15px; border-radius:4px; margin:15px 0;">
-                    <p style="font-weight:bold; margin-bottom:10px;">Uses of a popular tree</p>
-                    <p>For hundreds of years, the only tree that was more popular in Britain than elm was <input type="text" class="input-answer" id="ans24" placeholder="24">.</p>
-                    <p>Starting in the Bronze Age, many tools were made from elm and people also used it to make weapons. In the 18th century, it was grown to provide wood for boxes and <input type="text" class="input-answer" id="ans25" placeholder="25">.</p>
-                    <p>Due to its strength, elm was often used for mining equipment and the Cutty Sark's <input type="text" class="input-answer" id="ans26" placeholder="26"> was also constructed from elm.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="bottom-nav">
-        <div style="display:flex; gap:8px; align-items:center;">
-            <a href="reading-passage1.html" class="back-btn">← Passage 1</a>
-            <button class="clear-btn" id="clearAllBtn">🗑️ Clear</button>
-        </div>
-        <div class="nav-group">
-            <span class="part-label">P1:</span>
-            <a href="reading-passage1.html" class="q-indicator">1</a>
-            <span class="part-label">P2:</span>
-            <div class="q-indicator current" data-q="14">14</div>
-            <div class="q-indicator" data-q="15">15</div>
-            <div class="q-indicator" data-q="16">16</div>
-            <div class="q-indicator" data-q="17">17</div>
-            <div class="q-indicator" data-q="18">18</div>
-            <div class="q-indicator" data-q="19">19</div>
-            <div class="q-indicator" data-q="20">20</div>
-            <div class="q-indicator" data-q="21">21</div>
-            <div class="q-indicator" data-q="22">22</div>
-            <div class="q-indicator" data-q="23">23</div>
-            <div class="q-indicator" data-q="24">24</div>
-            <div class="q-indicator" data-q="25">25</div>
-            <div class="q-indicator" data-q="26">26</div>
-            <span class="part-label">P3:</span>
-            <a href="reading-passage3.html" class="q-indicator">27</a>
-        </div>
-        <a href="reading-passage3.html" class="next-passage-btn">Passage 3 →</a>
-    </div>
-<script>
-const STORAGE_KEY = 'Cambridge20_Reading';
-const passageId = 'reading-passage2';
-
-// --- Draggable Divider ---
-const divider = document.getElementById('divider');
-const passagePane = document.getElementById('passagePane');
-const questionsPane = document.getElementById('questionsPane');
-const MIN_WIDTH = 25, MAX_WIDTH = 75;
-let savedSplit = localStorage.getItem(`${STORAGE_KEY}_split`);
-let passagePercent = savedSplit ? parseFloat(savedSplit) : 50;
-
-function applySplit() {
-    passagePane.style.width = `calc(${passagePercent}% - 6px)`;
-    questionsPane.style.width = `calc(${100 - passagePercent}% - 6px)`;
-}
-applySplit();
-
-let isDraggingDivider = false;
-divider.addEventListener('mousedown', e => {
-    isDraggingDivider = true;
-    divider.classList.add('active');
-    document.body.style.cursor = 'col-resize';
-    document.body.style.userSelect = 'none';
-});
-document.addEventListener('mousemove', e => {
-    if (!isDraggingDivider) return;
-    const rect = document.getElementById('mainGrid').getBoundingClientRect();
-    let newPercent = ((e.clientX - rect.left) / rect.width) * 100;
-    newPercent = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, newPercent));
-    passagePercent = newPercent;
-    applySplit();
-});
-document.addEventListener('mouseup', () => {
-    if (isDraggingDivider) {
-        isDraggingDivider = false;
-        divider.classList.remove('active');
-        document.body.style.cursor = '';
-        document.body.style.userSelect = '';
-        localStorage.setItem(`${STORAGE_KEY}_split`, passagePercent);
-    }
-});
-
-// --- Highlight & Note System ---
-const noteBox = document.getElementById('noteBox');
-const noteText = document.getElementById('noteText');
-const noteClose = document.getElementById('noteClose');
-const contextMenu = document.getElementById('contextMenu');
-let currentRange = null, activeHighlight = null;
-const highlightAreas = ['passageArea', 'questionsArea'];
-
-function isInHighlightArea(node) {
-    return highlightAreas.some(id => {
-        const el = document.getElementById(id);
-        return el && el.contains(node);
-    });
-}
-
-function isSelectionValid(sel) {
-    if (!sel || sel.isCollapsed || !sel.toString().trim()) return false;
-    try {
-        return isInHighlightArea(sel.getRangeAt(0).commonAncestorContainer);
-    } catch { return false; }
-}
-
-function saveHighlightsData() {
-    const highlights = [];
-    document.querySelectorAll('.highlight').forEach(hl => {
-        highlights.push({
-            text: hl.textContent,
-            note: hl.getAttribute('data-note') || ''
-        });
-    });
-    localStorage.setItem(`${passageId}_highlights`, JSON.stringify(highlights));
-}
-
-document.addEventListener('contextmenu', e => {
-    let el = e.target, clickedHighlight = null;
-    while (el) {
-        if (el.classList && el.classList.contains('highlight')) {
-            clickedHighlight = el; break;
-        }
-        el = el.parentElement;
-    }
-    if (clickedHighlight) {
-        activeHighlight = clickedHighlight;
-        currentRange = null;
-        contextMenu.style.left = e.pageX + 'px';
-        contextMenu.style.top = e.pageY + 'px';
-        contextMenu.style.display = 'block';
-        e.preventDefault();
-        return;
-    }
-    const sel = window.getSelection();
-    if (isSelectionValid(sel)) {
-        currentRange = sel.getRangeAt(0).cloneRange();
-        activeHighlight = null;
-        contextMenu.style.left = e.pageX + 'px';
-        contextMenu.style.top = e.pageY + 'px';
-        contextMenu.style.display = 'block';
-        e.preventDefault();
-    } else {
-        contextMenu.style.display = 'none';
-    }
-});
-
-document.addEventListener('click', e => {
-    if (!contextMenu.contains(e.target)) contextMenu.style.display = 'none';
-});
-
-document.getElementById('menuHighlight').addEventListener('click', () => {
-    contextMenu.style.display = 'none';
-    if (!currentRange) return;
-    try {
-        const span = document.createElement('span');
-        span.className = 'highlight';
-        span.setAttribute('data-note', '');
-        currentRange.surroundContents(span);
-        window.getSelection().removeAllRanges();
-        saveHighlightsData();
-    } catch { alert('⚠️ Please select smaller sections of text.'); }
-});
-
-document.getElementById('menuAddNote').addEventListener('click', () => {
-    contextMenu.style.display = 'none';
-    if (!activeHighlight && currentRange) {
-        try {
-            const span = document.createElement('span');
-            span.className = 'highlight';
-            span.setAttribute('data-note', '');
-            currentRange.surroundContents(span);
-            activeHighlight = span;
-            window.getSelection().removeAllRanges();
-        } catch { alert('⚠️ Please select smaller sections of text.'); return; }
-    }
-    if (!activeHighlight) return;
-    const rect = activeHighlight.getBoundingClientRect();
-    noteBox.style.left = (rect.right + 10) + 'px';
-    noteBox.style.top = rect.top + 'px';
-    noteBox.style.display = 'block';
-    noteText.value = activeHighlight.getAttribute('data-note') || '';
-    noteText.focus();
-});
-
-document.getElementById('menuRemove').addEventListener('click', () => {
-    contextMenu.style
-.display = 'none';
-    if (!activeHighlight) return;
-    const parent = activeHighlight.parentNode;
-    while (activeHighlight.firstChild) {
-        parent.insertBefore(activeHighlight.firstChild, activeHighlight);
-    }
-    parent.removeChild(activeHighlight);
-    parent.normalize();
-    activeHighlight = null;
-    saveHighlightsData();
-});
-
-noteClose.addEventListener('click', () => {
-    if (activeHighlight) {
-        activeHighlight.setAttribute('data-note', noteText.value);
-        saveHighlightsData();
-    }
-    noteBox.style.display = 'none';
-    activeHighlight = null;
-});
-
-// Drag note box
-let isDraggingNote = false, noteOffsetX = 0, noteOffsetY = 0;
-document.getElementById('noteDragHandle').addEventListener('mousedown', e => {
-    isDraggingNote = true;
-    const rect = noteBox.getBoundingClientRect();
-    noteOffsetX = e.clientX - rect.left;
-    noteOffsetY = e.clientY - rect.top;
-});
-document.addEventListener('mousemove', e => {
-    if (!isDraggingNote) return;
-    noteBox.style.left = (e.clientX - noteOffsetX) + 'px';
-    noteBox.style.top = (e.clientY - noteOffsetY) + 'px';
-});
-document.addEventListener('mouseup', () => isDraggingNote = false);
-
-// --- Answers & Navigation ---
-let currentQuestionNum = 14;
-
-function setCurrentQuestion(qNum) {
-    document.querySelectorAll('.q-row.current').forEach(r => r.classList.remove('current'));
-    document.querySelectorAll('.q-indicator.current').forEach(b => {
-        if (!b.href) b.classList.remove('current');
-    });
-    currentQuestionNum = qNum;
-    const row = document.getElementById(`q${qNum}`);
-    const indicator = document.querySelector(`.q-indicator[data-q="${qNum}"]`);
-    if (row) row.classList.add('current');
-    if (indicator) indicator.classList.add('current');
-}
-
-function updateStatus() {
-    for (let q = 14; q <= 26; q++) {
-        const btn = document.querySelector(`.q-indicator[data-q="${q}"]`);
-        if (!btn) continue;
-        const val = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
-        btn.classList.toggle('answered', val.trim().length > 0);
-    }
-}
-
-document.querySelectorAll('.q-indicator[data-q]').forEach(btn => {
-    btn.addEventListener('click', () => {
-        const qNum = parseInt(btn.dataset.q);
-        setCurrentQuestion(qNum);
-        const target = document.getElementById(`q${qNum}`);
-        if (target) target.scrollIntoView({behavior:'smooth', block:'center'});
-    });
-});
-
-function saveAnswer(q, val) {
-    localStorage.setItem(`${STORAGE_KEY}_q${q}`, val.trim());
-    updateStatus();
-}
-
-// Q14–18 matching table
-document.querySelectorAll('.ans-box[data-q]').forEach(box => {
-    const q = parseInt(box.dataset.q);
-    box.addEventListener('input', () => {
-        const val = box.value.toUpperCase();
-        box.value = val;
-        box.classList.toggle('filled', val.trim() !== '');
-        saveAnswer(q, val);
-    });
-});
-
-// Q19–23 matching
-for (let q = 19; q <= 23; q++) {
-    const box = document.getElementById(`ans${q}`);
-    box.addEventListener('input', () => {
-        const val = box.value.toUpperCase();
-        box.value = val;
-        box.classList.toggle('filled', val.trim() !== '');
-        saveAnswer(q, val);
-    });
-}
-
-// Q24–26 summary
-for (let q = 24; q <= 26; q++) {
-    const box = document.getElementById(`ans${q}`);
-    box.addEventListener('input', () => {
-        const val = box.value.trim();
-        box.value = val;
-        box.classList.toggle('filled', val !== '');
-        saveAnswer(q, val);
-    });
-}
-
-function clearAllData() {
-    if (!confirm('⚠️ Are you sure you want to clear ALL answers, highlights, and notes? This cannot be undone.')) return;
-    for (let q = 1; q <= 40; q++) localStorage.removeItem(`${STORAGE_KEY}_q${q}`);
-    localStorage.removeItem(`${passageId}_highlights`);
-    localStorage.removeItem(`${STORAGE_KEY}_split`);
-    document.querySelectorAll('input').forEach(i => { i.value = ''; i.classList.remove('filled'); });
-    document.querySelectorAll('.highlight').forEach(hl => {
-        const parent = hl.parentNode;
-        while (hl.firstChild) parent.insertBefore(hl.firstChild, hl);
-        parent.removeChild(hl);
-        parent.normalize();
-    });
-    location.reload();
-}
-document.getElementById('clearAllBtn').addEventListener('click', clearAllData);
-
-document.addEventListener('DOMContentLoaded', () => {
-    // Load saved answers
-    for (let q = 14; q <= 18; q++) {
-        document.querySelectorAll(`.ans-box[data-q="${q}"]`).forEach(box => {
-            const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
-            if (saved) { box.value = saved; box.classList.add('filled'); }
-        });
-    }
-    for (let q = 19; q <= 26; q++) {
-        const box = document.getElementById(`ans${q}`);
-        const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
-        if (saved) { box.value = saved; box.classList.add('filled'); }
-    }
-    
-    setCurrentQuestion(14);
-    updateStatus();
-});
-</script>
-</body>
-</html>
+    <!-- DO NOT ADD ANYTHING HERE — PART 2 CONTINUES THIS -->
