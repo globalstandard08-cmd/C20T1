@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Answers — Cambridge 19 Test 4</title>
+    <title>Your Answers — Cambridge 20 Test 1</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
         body { background: #f4f6f9; padding: 20px; line-height: 1.7; }
@@ -27,7 +27,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>📋 Your Answers — Cambridge 19 Test 4</h1>
+        <h1>📋 Your Answers — Cambridge 20 Test 1</h1>
         <!-- LISTENING -->
         <h2>🎧 Listening</h2>
         <h3>Part 1 — Questions 1–10</h3>
@@ -61,10 +61,10 @@
         </div>
     </div>
 <script>
-// ✅ ALL KEYS UPDATED → Cambridge 19 Test 4
-const STORAGE_LISTENING = 'Cambridge19_Test4_Listening';
-const STORAGE_READING = 'Cambridge19_Test4_Reading';
-const STORAGE_WRITING = 'Cambridge19_Test4_Writing';
+// ✅ ALL KEYS UPDATED → Cambridge 20 Test 1
+const STORAGE_LISTENING = 'Cambridge20_Test1_Listening';
+const STORAGE_READING = 'Cambridge20_Test1_Reading';
+const STORAGE_WRITING = 'Cambridge20_Test1_Writing';
 
 // Exact keys matching writing-task1.html & writing-task2.html
 const STORAGE_WRITING_T1 = STORAGE_WRITING + '_writingTask1';
@@ -72,7 +72,7 @@ const STORAGE_WRITING_T2 = STORAGE_WRITING + '_writingTask2';
 
 // Clear all keys for this test
 const ALL_KEYS = Object.keys(localStorage);
-const REL_KEYS = ALL_KEYS.filter(k => k.includes('Cambridge19_Test4'));
+const REL_KEYS = ALL_KEYS.filter(k => k.includes('Cambridge20_Test1'));
 
 function getAnswer(prefix, qNum) {
     const key = `${prefix}_q${qNum}`;
@@ -97,7 +97,7 @@ function renderWritingBox(containerId, storageKey) {
     container.innerHTML = content?.trim() ? content : '<span class="empty">— No response submitted —</span>';
 }
 function downloadAnswers() {
-    let text = 'YOUR ANSWERS — Cambridge 19 Test 4\nGenerated: ' + new Date().toLocaleString() + '\n' + '='.repeat(50) + '\n\n';
+    let text = 'YOUR ANSWERS — Cambridge 20 Test 1\nGenerated: ' + new Date().toLocaleString() + '\n' + '='.repeat(50) + '\n\n';
     text += '🎧 LISTENING\n' + '-'.repeat(30) + '\n';
     for (let q = 1; q <= 40; q++) text += `Q${String(q).padStart(2,' ')}: ${getAnswer(STORAGE_LISTENING, q) || '— No answer —'}\n`;
     text += '\n📖 READING\n' + '-'.repeat(30) + '\n';
