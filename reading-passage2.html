@@ -321,6 +321,17 @@
         }
         .summary-box p { margin: 10px 0; line-height: 1.6; }
         .summary-box p:first-child { margin-top: 0; font-weight: bold; }
+                .tick-box {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #1f3a5f;
+        }
+        td:has(.tick-box) {
+            text-align: center;
+            padding: 6px 4px;
+        }
+
     </style>
 </head>
 <body>
@@ -373,77 +384,82 @@
         <div class="divider" id="divider"></div>
 
         <div class="questions-pane" id="questionsPane">
-                       <div class="questions-block">
+                                  <div class="questions-block">
                 <h3>Questions 14–18</h3>
-                <p style="margin-bottom:12px;"><em>Reading Passage 2 has seven sections, A–G. Which section contains the following information?</em><br>
-                <em>NB You may use any letter more than once.</em></p>
+                <p style="margin-bottom:12px;">Reading Passage 2 has seven sections, A–G.<br>
+                Which section contains the following information? <em>NB You may use any letter more than once.</em></p>
                 
                 <table class="match-table">
-                    <tr>
-                        <th style="width:75%; text-align:left;">Statement</th>
-                        <th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; padding:12px 10px; line-height:1.6;">
-                            14. reference to the research problems that arise from there being only a few surviving large elms
-                        </td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="14" maxlength="1"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; padding:12px 10px; line-height:1.6;">
-                            15. details of a difference of opinion about the value of reintroducing elms to Britain
-                        </td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="15" maxlength="1"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; padding:12px 10px; line-height:1.6;">
-                            16. reference to how Dutch elm disease was brought into Britain
-                        </td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="16" maxlength="1"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; padding:12px 10px; line-height:1.6;">
-                            17. a description of the conditions that have enabled a location in Britain to escape Dutch elm disease
-                        </td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="17" maxlength="1"></td>
-                    </tr>
-                    <tr>
-                        <td style="text-align:left; padding:12px 10px; line-height:1.6;">
-                            18. reference to the stage at which young elms become vulnerable to Dutch elm disease
-                        </td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                        <td><input type="text" class="ans-box" data-q="18" maxlength="1"></td>
-                    </tr>
+                    <thead>
+                        <tr>
+                            <th style="width:75%; text-align:left;">Column 1</th>
+                            <th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>F</th><th>G</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="text-align:left; padding:14px 12px; line-height:1.6;">
+                                14. reference to the research problems that arise from there being only a few surviving large elms
+                            </td>
+                            <td><input type="radio" name="q14" value="A" class="tick-box" data-q="14"></td>
+                            <td><input type="radio" name="q14" value="B" class="tick-box" data-q="14"></td>
+                            <td><input type="radio" name="q14" value="C" class="tick-box" data-q="14"></td>
+                            <td><input type="radio" name="q14" value="D" class="tick-box" data-q="14"></td>
+                            <td><input type="radio" name="q14" value="E" class="tick-box" data-q="14"></td>
+                            <td><input type="radio" name="q14" value="F" class="tick-box" data-q="14"></td>
+                            <td><input type="radio" name="q14" value="G" class="tick-box" data-q="14"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left; padding:14px 12px; line-height:1.6;">
+                                15. details of a difference of opinion about the value of reintroducing elms to Britain
+                            </td>
+                            <td><input type="radio" name="q15" value="A" class="tick-box" data-q="15"></td>
+                            <td><input type="radio" name="q15" value="B" class="tick-box" data-q="15"></td>
+                            <td><input type="radio" name="q15" value="C" class="tick-box" data-q="15"></td>
+                            <td><input type="radio" name="q15" value="D" class="tick-box" data-q="15"></td>
+                            <td><input type="radio" name="q15" value="E" class="tick-box" data-q="15"></td>
+                            <td><input type="radio" name="q15" value="F" class="tick-box" data-q="15"></td>
+                            <td><input type="radio" name="q15" value="G" class="tick-box" data-q="15"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left; padding:14px 12px; line-height:1.6;">
+                                16. reference to how Dutch elm disease was brought into Britain
+                            </td>
+                            <td><input type="radio" name="q16" value="A" class="tick-box" data-q="16"></td>
+                            <td><input type="radio" name="q16" value="B" class="tick-box" data-q="16"></td>
+                            <td><input type="radio" name="q16" value="C" class="tick-box" data-q="16"></td>
+                            <td><input type="radio" name="q16" value="D" class="tick-box" data-q="16"></td>
+                            <td><input type="radio" name="q16" value="E" class="tick-box" data-q="16"></td>
+                            <td><input type="radio" name="q16" value="F" class="tick-box" data-q="16"></td>
+                            <td><input type="radio" name="q16" value="G" class="tick-box" data-q="16"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left; padding:14px 12px; line-height:1.6;">
+                                17. a description of the conditions that have enabled a location in Britain to escape Dutch elm disease
+                            </td>
+                            <td><input type="radio" name="q17" value="A" class="tick-box" data-q="17"></td>
+                            <td><input type="radio" name="q17" value="B" class="tick-box" data-q="17"></td>
+                            <td><input type="radio" name="q17" value="C" class="tick-box" data-q="17"></td>
+                            <td><input type="radio" name="q17" value="D" class="tick-box" data-q="17"></td>
+                            <td><input type="radio" name="q17" value="E" class="tick-box" data-q="17"></td>
+                            <td><input type="radio" name="q17" value="F" class="tick-box" data-q="17"></td>
+                            <td><input type="radio" name="q17" value="G" class="tick-box" data-q="17"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:left; padding:14px 12px; line-height:1.6;">
+                                18. reference to the stage at which young elms become vulnerable to Dutch elm disease
+                            </td>
+                            <td><input type="radio" name="q18" value="A" class="tick-box" data-q="18"></td>
+                            <td><input type="radio" name="q18" value="B" class="tick-box" data-q="18"></td>
+                            <td><input type="radio" name="q18" value="C" class="tick-box" data-q="18"></td>
+                            <td><input type="radio" name="q18" value="D" class="tick-box" data-q="18"></td>
+                            <td><input type="radio" name="q18" value="E" class="tick-box" data-q="18"></td>
+                            <td><input type="radio" name="q18" value="F" class="tick-box" data-q="18"></td>
+                            <td><input type="radio" name="q18" value="G" class="tick-box" data-q="18"></td>
+                        </tr>
+                    </tbody>
                 </table>
+                <p style="margin-top:10px; font-size:14px; color:#555;"><em>Click the box under the correct letter to answer.</em></p>
             </div>
 
             <div class="questions-block">
@@ -747,16 +763,16 @@ function saveAnswer(q, val) {
     updateStatus();
 }
 
-// Q14–18 matching table
-document.querySelectorAll('.ans-box[data-q]').forEach(box => {
-    const q = parseInt(box.dataset.q);
-    box.addEventListener('input', () => {
-        const val = box.value.toUpperCase();
-        box.value = val;
-        box.classList.toggle('filled', val.trim() !== '');
-        saveAnswer(q, val);
+// Q14–18 Matching — click/tick boxes
+document.querySelectorAll('.tick-box').forEach(box => {
+    box.addEventListener('change', () => {
+        const qNum = parseInt(box.dataset.q);
+        const val = box.value;
+        saveAnswer(qNum, val);
+        updateStatus();
     });
 });
+
 
 // Q19–23 matching
 for (let q = 19; q <= 23; q++) {
@@ -797,13 +813,15 @@ function clearAllData() {
 document.getElementById('clearAllBtn').addEventListener('click', clearAllData);
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Load saved answers
+       // Load saved answers for tick-box Q14–18
     for (let q = 14; q <= 18; q++) {
-        document.querySelectorAll(`.ans-box[data-q="${q}"]`).forEach(box => {
-            const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
-            if (saved) { box.value = saved; box.classList.add('filled'); }
-        });
+        const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
+        if (saved) {
+            const radio = document.querySelector(`.tick-box[data-q="${q}"][value="${saved}"]`);
+            if (radio) radio.checked = true;
+        }
     }
+
     for (let q = 19; q <= 26; q++) {
         const box = document.getElementById(`ans${q}`);
         const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
