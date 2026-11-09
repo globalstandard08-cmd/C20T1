@@ -161,26 +161,33 @@
             color: #000;
             position: relative;
         }
-        .highlight .note-marker {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            width: 18px;
-            height: 18px;
-            ground: #1f3a5f;
-            color: #fff;
-            border-radius: 50%;
-            font-size: 11px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
+              .highlight { 
+            background-color: #ffd700; 
+            padding: 1px 3px; 
+            border-radius: 2px; 
+            cursor: pointer; 
+            display: inline; 
+            color: #000; 
+            position: relative; 
         }
-
+        .note-marker { 
+            position: absolute; 
+            top: -8px; 
+            right: -8px; 
+            width: 18px; 
+            height: 18px; 
+            background: #1f3a5f; 
+            color: white; 
+            border-radius: 50%; 
+            font-size: 11px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 10; 
         }
         .context-menu { 
             position: absolute; 
-            ground: #fff; 
+            background: #fff; 
             border: 1px solid #ddd; 
             box-shadow: 0 2px 12px rgba(0,0,0,0.1); 
             z-index: 9999; 
@@ -193,7 +200,9 @@
             font-size: 14px; 
             border-bottom: 1px solid #f5f5f5; 
         }
-        .context-menu div:hover { ground: #f5f5f5; }
+        .context-menu div:last-child { border-bottom: none; }
+        .context-menu div:hover { background: #f5f5f5; }
+
         
         .note-box { 
             position: absolute; 
@@ -613,62 +622,203 @@
     </div>
 
 <script>
-const STORAGE_KEY = 'ielts_passage3';
-const highlightAreas = ['passageArea', 'questionsPane'];
-let currentHighlight = null;
-let savedSelection = null;
+const STORAGE_KEY = 'Cambridge20_Reading';
+const passageId = 'reading-passage3';
 
-// Save/load helpers
-function saveAnswer(qNum, value) {
-    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    data[`q${qNum}`] = value;
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    updateStatus();
+// --- Draggable Divider ---
+const divider = document.getElementById('divider');
+const passagePane = document.getElementById('passagePane');
+const questionsPane = document.getElementById('questionsPane');
+const MIN_WIDTH = 25, MAX_WIDTH = 75;
+let savedSplit = localStorage.getItem(`${STORAGE_KEY}_split`);
+let passagePercent = savedSplit ? parseFloat(savedSplit) : 50;
+
+function applySplit() {
+    passagePane.style.width = `calc(${passagePercent}% - 6px)`;
+    questionsPane.style.width = `calc(${100 - passagePercent}% - 6px)`;
 }
-function loadAnswer(qNum) {
-    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    return data[`q${qNum}`] || '';
-}
-function clearAllAnswers() {
-    if (confirm('Clear ALL answers for Passage 3? This cannot be undone.')) {
-        localStorage.removeItem(STORAGE_KEY);
-        location.reload();
+applySplit();
+
+let isDraggingDivider = false;
+divider.addEventListener('mousedown', e => {
+    isDraggingDivider = true;
+    divider.classList.add('active');
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+});
+document.addEventListener('mousemove', e => {
+    if (!isDraggingDivider) return;
+    const rect = document.getElementById('mainGrid').getBoundingClientRect();
+    let newPercent = ((e.clientX - rect.left) / rect.width) * 100;
+    newPercent = Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, newPercent));
+    passagePercent = newPercent;
+    applySplit();
+});
+document.addEventListener('mouseup', () => {
+    if (isDraggingDivider) {
+        isDraggingDivider = false;
+        divider.classList.remove('active');
+        document.body.style.cursor = '';
+        document.body.style.userSelect = '';
+        localStorage.setItem(`${STORAGE_KEY}_split`, passagePercent);
     }
+});
+
+// --- Highlight & Note System — COPIED FROM PASSAGE 2 ---
+const noteBox = document.getElementById('noteBox');
+const noteText = document.getElementById('noteText');
+const noteClose = document.getElementById('noteClose');
+const contextMenu = document.getElementById('contextMenu');
+let currentRange = null, activeHighlight = null;
+const highlightAreas = ['passageArea', 'questionsPane'];
+
+function isInHighlightArea(node) {
+    return highlightAreas.some(id => {
+        const el = document.getElementById(id);
+        return el && el.contains(node);
+    });
 }
+
+function isSelectionValid(sel) {
+    if (!sel || sel.isCollapsed || !sel.toString().trim()) return false;
+    try {
+        return isInHighlightArea(sel.getRangeAt(0).commonAncestorContainer);
+    } catch { return false; }
+}
+
+function saveHighlightsData() {
+    const highlights = [];
+    document.querySelectorAll('.highlight').forEach(hl => {
+        highlights.push({
+            text: hl.textContent,
+            note: hl.getAttribute('data-note') || '',
+            area: hl.closest('#passagePane') ? 'passage' : 'questions'
+        });
+    });
+    localStorage.setItem(`${passageId}_highlights`, JSON.stringify(highlights));
+}
+
+document.addEventListener('contextmenu', e => {
+    let el = e.target, clickedHighlight = null;
+    while (el) {
+        if (el.classList && el.classList.contains('highlight')) {
+            clickedHighlight = el; break;
+        }
+        el = el.parentElement;
+    }
+    if (clickedHighlight) {
+        activeHighlight = clickedHighlight;
+        currentRange = null;
+        contextMenu.style.left = e.pageX + 'px';
+        contextMenu.style.top = e.pageY + 'px';
+        contextMenu.style.display = 'block';
+        e.preventDefault();
+        return;
+    }
+    const sel = window.getSelection();
+    if (isSelectionValid(sel)) {
+        currentRange = sel.getRangeAt(0).cloneRange();
+        activeHighlight = null;
+        contextMenu.style.left = e.pageX + 'px';
+        contextMenu.style.top = e.pageY + 'px';
+        contextMenu.style.display = 'block';
+        e.preventDefault();
+    } else {
+        contextMenu.style.display = 'none';
+    }
+});
+
+document.addEventListener('click', e => {
+    if (!contextMenu.contains(e.target)) contextMenu.style.display = 'none';
+});
+
+document.getElementById('menuHighlight').addEventListener('click', () => {
+    contextMenu.style.display = 'none';
+    if (!currentRange) return;
+    try {
+        const span = document.createElement('span');
+        span.className = 'highlight';
+        span.setAttribute('data-note', '');
+        currentRange.surroundContents(span);
+        window.getSelection().removeAllRanges();
+        saveHighlightsData();
+    } catch { alert('⚠️ Please select smaller sections of text.'); }
+});
+
+document.getElementById('menuAddNote').addEventListener('click', () => {
+    contextMenu.style.display = 'none';
+    if (!activeHighlight && currentRange) {
+        try {
+            const span = document.createElement('span');
+            span.className = 'highlight';
+            span.setAttribute('data-note', '');
+            currentRange.surroundContents(span);
+            activeHighlight = span;
+            window.getSelection().removeAllRanges();
+        } catch { alert('⚠️ Please select smaller sections of text.'); return; }
+    }
+    if (!activeHighlight) return;
+    const rect = activeHighlight.getBoundingClientRect();
+    noteBox.style.left = (rect.right + 10) + 'px';
+    noteBox.style.top = rect.top + 'px';
+    noteBox.style.display = 'block';
+    noteText.value = activeHighlight.getAttribute('data-note') || '';
+    noteText.focus();
+});
+
+document.getElementById('menuRemove').addEventListener('click', () => {
+    contextMenu.style.display = 'none';
+    if (!activeHighlight) return;
+    const parent = activeHighlight.parentNode;
+    while (activeHighlight.firstChild) {
+        parent.insertBefore(activeHighlight.firstChild, activeHighlight);
+    }
+    parent.removeChild(activeHighlight);
+    parent.normalize();
+    activeHighlight = null;
+    saveHighlightsData();
+});
+
+noteClose.addEventListener('click', () => {
+    if (activeHighlight) {
+        activeHighlight.setAttribute('data-note', noteText.value);
+        saveHighlightsData();
+    }
+    noteBox.style.display = 'none';
+    activeHighlight = null;
+});
+
+// Drag note box
+let isDraggingNote = false, noteOffsetX = 0, noteOffsetY = 0;
+document.getElementById('noteDragHandle').addEventListener('mousedown', e => {
+    isDraggingNote = true;
+    const rect = noteBox.getBoundingClientRect();
+    noteOffsetX = e.clientX - rect.left;
+    noteOffsetY = e.clientY - rect.top;
+});
+document.addEventListener('mousemove', e => {
+    if (!isDraggingNote) return;
+    noteBox.style.left = (e.clientX - noteOffsetX) + 'px';
+    noteBox.style.top = (e.clientY - noteOffsetY) + 'px';
+});
+document.addEventListener('mouseup', () => isDraggingNote = false);
+
+// --- Answers & Navigation ---
 function updateStatus() {
     for (let q = 27; q <= 40; q++) {
         const ind = document.getElementById(`ind${q}`);
         if (!ind) continue;
-        ind.classList.toggle('answered', loadAnswer(q) !== '');
+        const val = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
+        ind.classList.toggle('answered', val.trim() !== '');
     }
 }
 
-// Divider resizing
-const divider = document.getElementById('divider');
-const passagePane = document.getElementById('passagePane');
-const questionsPane = document.getElementById('questionsPane');
-let isDragging = false;
+function saveAnswer(q, val) {
+    localStorage.setItem(`${STORAGE_KEY}_q${q}`, val.trim());
+    updateStatus();
+}
 
-divider.addEventListener('mousedown', e => {
-    isDragging = true;
-    divider.classList.add('active');
-    document.body.style.cursor = 'col-resize';
-});
-document.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    const total = document.getElementById('mainGrid').clientWidth;
-    const pct = (e.clientX / total) * 100;
-    if (pct < 20 || pct > 80) return;
-    passagePane.style.width = `calc(${pct}% - 6px)`;
-    questionsPane.style.width = `calc(${100 - pct}% - 6px)`;
-});
-document.addEventListener('mouseup', () => {
-    isDragging = false;
-    divider.classList.remove('active');
-    document.body.style.cursor = '';
-});
-
-// Tick-box answer handling
+// Q27–30, Q36–40 Tick boxes
 document.querySelectorAll('.tick-box').forEach(box => {
     box.addEventListener('change', () => {
         const qNum = parseInt(box.dataset.q);
@@ -676,97 +826,46 @@ document.querySelectorAll('.tick-box').forEach(box => {
     });
 });
 
-// Highlight & Notes system
-const contextMenu = document.getElementById('contextMenu');
-const noteBox = document.getElementById('noteBox');
-const noteText = document.getElementById('noteText');
-let noteTarget = null;
+// Q31–35 Type letter boxes
+for (let q = 31; q <= 35; q++) {
+    const box = document.getElementById(`ans${q}`);
+    if (!box) continue;
+    box.addEventListener('input', () => {
+        let val = box.value.toUpperCase();
+        if (!['A','B','C','D','E','F','G'].includes(val)) val = '';
+        box.value = val;
+        saveAnswer(q, val);
+    });
+}
 
-document.addEventListener('contextmenu', e => {
-    const inAllowed = highlightAreas.some(id => e.target.closest(`#${id}`));
-    if (!inAllowed) return;
-    const sel = window.getSelection();
-    if (sel.toString().trim() === '' && !e.target.classList.contains('highlight')) return;
-    e.preventDefault();
-    savedSelection = sel.toString() ? {
-        text: sel.toString(),
-        range: sel.getRangeAt(0).cloneRange()
-    } : null;
-    if (e.target.classList.contains('highlight')) {
-        currentHighlight = e.target;
-        savedSelection = null;
-    } else {
-        currentHighlight = null;
-    }
-    // ✅ Menu appears exactly at your mouse
-    contextMenu.style.left = (e.pageX + 2) + 'px';
-    contextMenu.style.top = (e.pageY + 2) + 'px';
-    contextMenu.style.display = 'block';
-});
+// Clear All
+function clearAllData() {
+    if (!confirm('⚠️ Clear ALL answers, highlights, notes? Cannot undo.')) return;
+    for (let q = 1; q <= 40; q++) localStorage.removeItem(`${STORAGE_KEY}_q${q}`);
+    localStorage.removeItem(`${passageId}_highlights`);
+    localStorage.removeItem(`${STORAGE_KEY}_split`);
+    location.reload();
+}
+document.getElementById('clearAll').addEventListener('click', clearAllData);
 
-
-document.getElementById('menuHighlight').addEventListener('click', () => {
-    contextMenu.style.display = 'none';
-    if (!savedSelection) return;
-    const span = document.createElement('span');
-    span.className = 'highlight';
-    span.textContent = savedSelection.text;
-    savedSelection.range.surroundContents(span);
-});
-
-document.getElementById('menuAddNote').addEventListener('click', () => {
-    contextMenu.style.display = 'none';
-    if (savedSelection) {
-        const span = document.createElement('span');
-        span.className = 'highlight';
-        span.textContent = savedSelection.text;
-        savedSelection.range.surroundContents(span);
-        currentHighlight = span;
-    }
-    if (!currentHighlight) return;
-    noteTarget = currentHighlight;
-    noteText.value = currentHighlight.dataset.note || '';
-    const rect = currentHighlight.getBoundingClientRect();
-    noteBox.style.left = (rect.left + window.scrollX + 20) + 'px';
-    noteBox.style.top = (rect.bottom + window.scrollY + 10) + 'px';
-    noteBox.style.display = 'block';
-    noteText.focus();
-});
-
-document.getElementById('menuRemove').addEventListener('click', () => {
-    contextMenu.style.display = 'none';
-    if (!currentHighlight) return;
-    // Remove highlight WITHOUT duplicating text
-    const parent = currentHighlight.parentNode;
-    parent.replaceChild(document.createTextNode(currentHighlight.textContent), currentHighlight);
-    parent.normalize();
-});
-
-document.getElementById('noteClose').addEventListener('click', () => {
-    noteBox.style.display = 'none';
-    noteTarget = null;
-});
-noteText.addEventListener('input', () => {
-    if (noteTarget) {
-        noteTarget.dataset.note = noteText.value;
-    }
-});
-
-// Load saved answers on page ready
+// Load on ready
 document.addEventListener('DOMContentLoaded', () => {
-    for (let q = 27; q <= 40; q++) {
-        const val = loadAnswer(q);
-        if (!val) continue;
-        const radio = document.querySelector(`.tick-box[data-q="${q}"][value="${val}"]`);
+    // Q27–30, Q36–40 tick boxes
+    [27,28,29,30,36,37,38,39,40].forEach(q => {
+        const saved = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
+        if (!saved) return;
+        const radio = document.querySelector(`.tick-box[data-q="${q}"][value="${saved}"]`);
         if (radio) radio.checked = true;
+    });
+    // Q31–35 text boxes
+    for (let q = 31; q <= 35; q++) {
+        const box = document.getElementById(`ans${q}`);
+        if (!box) continue;
+        box.value = localStorage.getItem(`${STORAGE_KEY}_q${q}`) || '';
     }
     updateStatus();
 });
-
-document.getElementById('clearAll').addEventListener('click', clearAllAnswers);
-document.addEventListener('click', e => {
-    if (!e.target.closest('.context-menu')) contextMenu.style.display = 'none';
-});
 </script>
+
 </body>
 </html>
