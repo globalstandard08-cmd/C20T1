@@ -593,7 +593,7 @@
     </div>
 
 <script>
-const STORAGE_KEY = 'Cambridge20_Reading';
+const STORAGE_KEY = 'Cambridge20_Test1_Reading';
 const passageId = 'reading-passage3';
 
 // --- Draggable Divider ---
@@ -602,7 +602,9 @@ const passagePane = document.getElementById('passagePane');
 const questionsPane = document.getElementById('questionsPane');
 const MIN_WIDTH = 25, MAX_WIDTH = 75;
 let savedSplit = localStorage.getItem(`${STORAGE_KEY}_split`);
-let passagePercent = savedSplit ? parseFloat(savedSplit) : 50;
+// and save:
+localStorage.setItem(`${STORAGE_KEY}_split`, passagePercent);
+
 
 function applySplit() {
     passagePane.style.width = `calc(${passagePercent}% - 6px)`;
