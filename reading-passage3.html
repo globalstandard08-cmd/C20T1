@@ -152,11 +152,31 @@
         }
         .yn-def strong { color: #1f3a5f; min-width: 70px; display: inline-block; }
         
-        .highlight { 
-            background: #ffd700; 
+             .highlight { 
+            background-color: #ffd700; 
             padding: 1px 3px; 
             border-radius: 2px; 
             cursor: pointer; 
+            display: inline; 
+            color: #000;
+            position: relative;
+        }
+        .highlight .note-marker {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            width: 18px;
+            height: 18px;
+            background: #1f3a5f;
+            color: #fff;
+            border-radius: 50%;
+            font-size: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
         }
         .context-menu { 
             position: absolute; 
@@ -688,8 +708,8 @@ document.getElementById('menuHighlight').addEventListener('click', () => {
     if (!savedSelection) return;
     const span = document.createElement('span');
     span.className = 'highlight';
+    span.textContent = savedSelection.text;
     savedSelection.range.surroundContents(span);
-    saveHighlights();
 });
 
 document.getElementById('menuAddNote').addEventListener('click', () => {
@@ -697,14 +717,16 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
     if (savedSelection) {
         const span = document.createElement('span');
         span.className = 'highlight';
+        span.textContent = savedSelection.text;
         savedSelection.range.surroundContents(span);
         currentHighlight = span;
     }
     if (!currentHighlight) return;
     noteTarget = currentHighlight;
     noteText.value = currentHighlight.dataset.note || '';
-    noteBox.style.left = (parseFloat(getComputedStyle(currentHighlight).left) || 100) + 'px';
-    noteBox.style.top = (parseFloat(getComputedStyle(currentHighlight).top) || 100) + 'px';
+    const rect = currentHighlight.getBoundingClientRect();
+    noteBox.style.left = (rect.left + window.scrollX + 20) + 'px';
+    noteBox.style.top = (rect.bottom + window.scrollY + 10) + 'px';
     noteBox.style.display = 'block';
     noteText.focus();
 });
@@ -712,10 +734,10 @@ document.getElementById('menuAddNote').addEventListener('click', () => {
 document.getElementById('menuRemove').addEventListener('click', () => {
     contextMenu.style.display = 'none';
     if (!currentHighlight) return;
+    // Remove highlight WITHOUT duplicating text
     const parent = currentHighlight.parentNode;
-    parent.insertBefore(document.createTextNode(currentHighlight.textContent), currentHighlight);
+    parent.replaceChild(document.createTextNode(currentHighlight.textContent), currentHighlight);
     parent.normalize();
-    saveHighlights();
 });
 
 document.getElementById('noteClose').addEventListener('click', () => {
@@ -727,18 +749,6 @@ noteText.addEventListener('input', () => {
         noteTarget.dataset.note = noteText.value;
     }
 });
-
-function saveHighlights() {
-    const data = [];
-    document.querySelectorAll('.highlight').forEach(h => {
-        data.push({
-            text: h.textContent,
-            note: h.dataset.note || '',
-            area: h.closest('#passagePane') ? 'passage' : 'questions'
-        });
-    });
-    localStorage.setItem(STORAGE_KEY + '_hl', JSON.stringify(data));
-}
 
 // Load saved answers on page ready
 document.addEventListener('DOMContentLoaded', () => {
