@@ -23,6 +23,7 @@
         .download { background: #10b981; color: white; }
         .clear { background: #dc2626; color: white; }
         .clear:hover { background: #b91c1c; }
+        .debug { margin-top: 20px; padding: 10px; background: #fff3cd; border-radius: 4px; font-size: 13px; }
     </style>
 </head>
 <body>
@@ -63,16 +64,19 @@
             <button class="btn clear" onclick="clearAllData()">🗑️ Clear All</button>
             <a href="#" class="btn print" onclick="window.print()">🖨️ Print / PDF</a>
         </div>
+
+        <!-- Debug section -->
+        <div class="debug" id="debug-info"></div>
     </div>
 
 <script>
 // ==============================================
-// CAMBRIDGE 20 TEST 1 — ALL KEYS STANDARDISED
+// CAMBRIDGE 20 TEST 1 — STANDARDISED KEYS
 // ==============================================
-const LISTENING_KEY = 'Cambridge20_Test1_Listening';
-const READING_KEY   = 'Cambridge20_Test1_Reading';
-const WRITING_T1_KEY = 'Cambridge20_Test1_Writing_Task1';
-const WRITING_T2_KEY = 'Cambridge20_Test1_Writing_Task2';
+const LISTENING_PREFIX = 'Cambridge20_Test1_Listening';
+const READING_PREFIX   = 'Cambridge20_Test1_Reading';
+const WRITING_T1_KEY   = 'Cambridge20_Test1_Writing_Task1';
+const WRITING_T2_KEY   = 'Cambridge20_Test1_Writing_Task2';
 
 // Get ALL keys for clearing (only this test)
 const ALL_KEYS = Object.keys(localStorage);
@@ -80,7 +84,8 @@ const TEST_KEYS = ALL_KEYS.filter(k => k.startsWith('Cambridge20_Test1'));
 
 // Helper: Get answer value
 function getAnswer(prefix, qNum) {
-    const val = localStorage.getItem(`${prefix}_q${qNum}`);
+    const key = `${prefix}_q${qNum}`;
+    const val = localStorage.getItem(key);
     return val ? val.trim() : '';
 }
 
@@ -118,12 +123,12 @@ function downloadAnswers() {
 
     text += '🎧 LISTENING\n' + '-'.repeat(35) + '\n';
     for (let q = 1; q <= 40; q++) {
-        text += `Q${String(q).padStart(2,' ')}: ${getAnswer(LISTENING_KEY, q) || '—'}\n`;
+        text += `Q${String(q).padStart(2,' ')}: ${getAnswer(LISTENING_PREFIX, q) || '—'}\n`;
     }
 
     text += '\n📖 READING\n' + '-'.repeat(35) + '\n';
     for (let q = 1; q <= 40; q++) {
-        text += `Q${String(q).padStart(2,' ')}: ${getAnswer(READING_KEY, q) || '—'}\n`;
+        text += `Q${String(q).padStart(2,' ')}: ${getAnswer(READING_PREFIX, q) || '—'}\n`;
     }
 
     text += '\n✍️ WRITING\n' + '-'.repeat(35) + '\n';
@@ -149,22 +154,39 @@ function clearAllData() {
     location.reload();
 }
 
+// Show what's actually stored (for debugging)
+function showDebug() {
+    const debugDiv = document.getElementById('debug-info');
+    let html = '<strong>Stored Keys Found:</strong><br>';
+    if (TEST_KEYS.length === 0) {
+        html += '<em>No answers saved yet. Complete some sections first.</em>';
+    } else {
+        TEST_KEYS.forEach(k => {
+            html += `${k} = "${localStorage.getItem(k)}"<br>`;
+        });
+    }
+    debugDiv.innerHTML = html;
+}
+
 // Load everything on page ready
 document.addEventListener('DOMContentLoaded', () => {
     // Listening
-    renderSection('listening-p1', LISTENING_KEY, 1, 10);
-    renderSection('listening-p2', LISTENING_KEY, 11, 20);
-    renderSection('listening-p3', LISTENING_KEY, 21, 30);
-    renderSection('listening-p4', LISTENING_KEY, 31, 40);
+    renderSection('listening-p1', LISTENING_PREFIX, 1, 10);
+    renderSection('listening-p2', LISTENING_PREFIX, 11, 20);
+    renderSection('listening-p3', LISTENING_PREFIX, 21, 30);
+    renderSection('listening-p4', LISTENING_PREFIX, 31, 40);
 
     // Reading
-    renderSection('reading-p1', READING_KEY, 1, 13);
-    renderSection('reading-p2', READING_KEY, 14, 26);
-    renderSection('reading-p3', READING_KEY, 27, 40);
+    renderSection('reading-p1', READING_PREFIX, 1, 13);
+    renderSection('reading-p2', READING_PREFIX, 14, 26);
+    renderSection('reading-p3', READING_PREFIX, 27, 40);
 
     // Writing
     renderWriting('writing-task1', WRITING_T1_KEY);
     renderWriting('writing-task2', WRITING_T2_KEY);
+
+    // Show debug info
+    showDebug();
 });
 </script>
 </body>
