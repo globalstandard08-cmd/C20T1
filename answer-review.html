@@ -23,7 +23,7 @@
         .download { background: #10b981; color: white; }
         .clear { background: #dc2626; color: white; }
         .clear:hover { background: #b91c1c; }
-        .debug { margin-top: 20px; padding: 12px; background: #fff3cd; border-radius: 4px; font-size: 13px; line-height: 1.6; }
+        .debug { margin-top: 25px; padding: 12px; background: #fff3cd; border-radius: 4px; font-size: 13px; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -52,9 +52,9 @@
 
         <!-- WRITING -->
         <h2>✍️ Writing</h2>
-        <h3>Task 1 — NYC Population</h3>
+        <h3>Task 1</h3>
         <div id="writing-task1" class="writing-box"></div>
-        <h3>Task 2 — Clean Water</h3>
+        <h3>Task 2</h3>
         <div id="writing-task2" class="writing-box"></div>
 
         <div class="nav">
@@ -70,27 +70,31 @@
 
 <script>
 // ==============================================
-// MATCHES YOUR ACTUAL SAVE KEYS FROM SECTION FILES
+// AUTO-DETECT & MATCH YOUR ACTUAL SAVED KEYS
 // ==============================================
-const LISTENING_PREFIX = 'Cambridge20_Test1_Listening';
-const READING_PREFIX   = 'Cambridge20_Test1_Reading';
 
-// ✅ Matches what your writing pages are actually saving
-const WRITING_T1_KEY   = 'Cambridge20_Test1_WritingTask1_writingTask1';
-const WRITING_T2_KEY   = 'Cambridge20_Test1_WritingTask2_writingTask2';
+// Get ALL stored keys for this test
+const ALL_KEYS = Object.keys(localStorage).filter(k => k.startsWith('Cambridge20_Test1'));
 
-// Get ALL keys for clearing
-const ALL_KEYS = Object.keys(localStorage);
-const TEST_KEYS = ALL_KEYS.filter(k => k.startsWith('Cambridge20_Test1'));
-
-// Helper: Get answer value
-function getAnswer(prefix, qNum) {
-    const key = `${prefix}_q${qNum}`;
-    const val = localStorage.getItem(key);
-    return val ? val.trim() : '';
+// Helper: Find ANY matching key by question number
+function findAnswer(sectionType, qNum) {
+    // Match patterns like:
+    // - Cambridge20_Test1_Listening_q1
+    // - Cambridge20_Test1_Listening_q31
+    // - Cambridge20_Test1_Reading_q5
+    const pattern = new RegExp(`${sectionType}.*_q${qNum}$`);
+    const match = ALL_KEYS.find(k => pattern.test(k));
+    return match ? localStorage.getItem(match).trim() : '';
 }
 
-// Helper: Build one answer row
+// Helper: Find writing content
+function findWriting(taskLabel) {
+    const pattern = new RegExp(`Writing.*${taskLabel}|${taskLabel}.*Writing`, 'i');
+    const match = ALL_KEYS.find(k => pattern.test(k));
+    return match ? localStorage.getItem(match).trim() : '';
+}
+
+// Build answer row
 function makeRow(qNum, answer) {
     const display = answer || '<span class="empty">— No answer —</span>';
     return `<div class="answer-row">
@@ -100,23 +104,24 @@ function makeRow(qNum, answer) {
 }
 
 // Render numbered section
-function renderSection(containerId, prefix, start, end) {
+function renderSection(containerId, sectionLabel, startQ, endQ) {
     const container = document.getElementById(containerId);
     let html = '';
-    for (let q = start; q <= end; q++) {
-        html += makeRow(q, getAnswer(prefix, q));
+    for (let q = startQ; q <= endQ; q++) {
+        const ans = findAnswer(sectionLabel, q);
+        html += makeRow(q, ans);
     }
     container.innerHTML = html;
 }
 
-// Render writing text box
-function renderWriting(containerId, storageKey) {
+// Render writing
+function renderWritingBox(containerId, taskLabel) {
     const container = document.getElementById(containerId);
-    const content = localStorage.getItem(storageKey);
-    container.innerHTML = content?.trim() || '<span class="empty">— No response saved —</span>';
+    const content = findWriting(taskLabel);
+    container.innerHTML = content || '<span class="empty">— No response saved —</span>';
 }
 
-// Download full report
+// Download report
 function downloadAnswers() {
     let text = 'YOUR ANSWERS — Cambridge 20 Test 1\n';
     text += 'Generated: ' + new Date().toLocaleString() + '\n';
@@ -124,17 +129,17 @@ function downloadAnswers() {
 
     text += '🎧 LISTENING\n' + '-'.repeat(35) + '\n';
     for (let q = 1; q <= 40; q++) {
-        text += `Q${String(q).padStart(2,' ')}: ${getAnswer(LISTENING_PREFIX, q) || '—'}\n`;
+        text += `Q${String(q).padStart(2,' ')}: ${findAnswer('Listening', q) || '—'}\n`;
     }
 
     text += '\n📖 READING\n' + '-'.repeat(35) + '\n';
     for (let q = 1; q <= 40; q++) {
-        text += `Q${String(q).padStart(2,' ')}: ${getAnswer(READING_PREFIX, q) || '—'}\n`;
+        text += `Q${String(q).padStart(2,' ')}: ${findAnswer('Reading', q) || '—'}\n`;
     }
 
     text += '\n✍️ WRITING\n' + '-'.repeat(35) + '\n';
-    text += 'Task 1:\n' + (localStorage.getItem(WRITING_T1_KEY) || '—') + '\n\n';
-    text += 'Task 2:\n' + (localStorage.getItem(WRITING_T2_KEY) || '—') + '\n';
+    text += 'Task 1:\n' + (findWriting('Task1') || '—') + '\n\n';
+    text += 'Task 2:\n' + (findWriting('Task2') || '—') + '\n';
 
     const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
@@ -147,22 +152,22 @@ function downloadAnswers() {
     URL.revokeObjectURL(url);
 }
 
-// Clear all test data
+// Clear all data
 function clearAllData() {
     if (!confirm('⚠️ Clear ALL answers for Cambridge 20 Test 1?\nThis cannot be undone.')) return;
-    TEST_KEYS.forEach(k => localStorage.removeItem(k));
+    ALL_KEYS.forEach(k => localStorage.removeItem(k));
     alert('✅ All answers cleared.');
     location.reload();
 }
 
-// Show what's actually stored
+// Debug display
 function showDebug() {
     const debugDiv = document.getElementById('debug-info');
-    let html = '<strong>Stored Keys Found:</strong><br>';
-    if (TEST_KEYS.length === 0) {
+    let html = '<strong>All Stored Keys:</strong><br>';
+    if (ALL_KEYS.length === 0) {
         html += '<em>No answers saved yet. Complete some sections first.</em>';
     } else {
-        TEST_KEYS.sort().forEach(k => {
+        ALL_KEYS.sort().forEach(k => {
             html += `${k} = "${localStorage.getItem(k)}"<br>`;
         });
     }
@@ -172,19 +177,19 @@ function showDebug() {
 // Load everything
 document.addEventListener('DOMContentLoaded', () => {
     // Listening
-    renderSection('listening-p1', LISTENING_PREFIX, 1, 10);
-    renderSection('listening-p2', LISTENING_PREFIX, 11, 20);
-    renderSection('listening-p3', LISTENING_PREFIX, 21, 30);
-    renderSection('listening-p4', LISTENING_PREFIX, 31, 40);
+    renderSection('listening-p1', 'Listening', 1, 10);
+    renderSection('listening-p2', 'Listening', 11, 20);
+    renderSection('listening-p3', 'Listening', 21, 30);
+    renderSection('listening-p4', 'Listening', 31, 40);
 
     // Reading
-    renderSection('reading-p1', READING_PREFIX, 1, 13);
-    renderSection('reading-p2', READING_PREFIX, 14, 26);
-    renderSection('reading-p3', READING_PREFIX, 27, 40);
+    renderSection('reading-p1', 'Reading', 1, 13);
+    renderSection('reading-p2', 'Reading', 14, 26);
+    renderSection('reading-p3', 'Reading', 27, 40);
 
-    // Writing — NOW MATCHES YOUR ACTUAL KEY NAMES!
-    renderWriting('writing-task1', WRITING_T1_KEY);
-    renderWriting('writing-task2', WRITING_T2_KEY);
+    // Writing
+    renderWritingBox('writing-task1', 'Task1');
+    renderWritingBox('writing-task2', 'Task2');
 
     showDebug();
 });
