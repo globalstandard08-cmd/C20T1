@@ -595,16 +595,16 @@
 <script>
 const STORAGE_KEY = 'Cambridge20_Test1_Reading';
 const passageId = 'reading-passage3';
+let passagePercent = 50; // Added — was missing!
 
 // --- Draggable Divider ---
 const divider = document.getElementById('divider');
 const passagePane = document.getElementById('passagePane');
 const questionsPane = document.getElementById('questionsPane');
 const MIN_WIDTH = 25, MAX_WIDTH = 75;
-let savedSplit = localStorage.getItem(`${STORAGE_KEY}_split`);
-// and save:
-localStorage.setItem(`${STORAGE_KEY}_split`, passagePercent);
 
+let savedSplit = localStorage.getItem(`${STORAGE_KEY}_split`);
+if (savedSplit) passagePercent = parseFloat(savedSplit);
 
 function applySplit() {
     passagePane.style.width = `calc(${passagePercent}% - 6px)`;
@@ -814,7 +814,7 @@ for (let q = 31; q <= 35; q++) {
 // Clear All
 function clearAllData() {
     if (!confirm('⚠️ Clear ALL answers, highlights, notes? Cannot undo.')) return;
-    for (let q = 1; q <= 40; q++) localStorage.removeItem(`${STORAGE_KEY}_q${q}`);
+    for (let q = 27; q <= 40; q++) localStorage.removeItem(`${STORAGE_KEY}_q${q}`);
     localStorage.removeItem(`${passageId}_highlights`);
     localStorage.removeItem(`${STORAGE_KEY}_split`);
     location.reload();
@@ -839,6 +839,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateStatus();
 });
 </script>
+
 
 </body>
 </html>
